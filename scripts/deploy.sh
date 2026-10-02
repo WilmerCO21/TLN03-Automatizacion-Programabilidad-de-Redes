@@ -10,7 +10,7 @@ TOPOLOGIA="$RAIZ/pc01/pc01.yml"
 LABORATORIO="pc01"
 ESPERADOS=27
 
-for comando in docker containerlab ip ss; do
+for comando in docker containerlab curl ip ss; do
     if ! command -v "$comando" >/dev/null 2>&1; then
         echo "FALLA: no se encontró el comando $comando"
         exit 1
@@ -93,6 +93,7 @@ echo
 echo "=== COMPROBANDO IMÁGENES ==="
 
 if ! docker image inspect \
+     frr:10.7.1-ssh \
      tln03-cpe:1.0 \
      tln03-web:1.0 \
      lscr.io/linuxserver/firefox:1157.0build1-1xtradeb1.2404.1-ls125 \

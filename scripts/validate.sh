@@ -11,6 +11,18 @@ LABORATORIO="pc01"
 ESPERADOS=27
 fallas=0
 
+for comando in docker containerlab curl; do
+    if ! command -v "$comando" >/dev/null 2>&1; then
+        echo "FALLA: no se encontró el comando $comando"
+        exit 1
+    fi
+done
+
+if ! docker info >/dev/null 2>&1; then
+    echo "FALLA: Docker no está funcionando"
+    exit 1
+fi
+
 correcto() {
     echo "OK: $1"
 }

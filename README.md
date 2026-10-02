@@ -22,7 +22,7 @@ El laboratorio permite comprobar:
 - NAT para el tráfico empresarial IPv4.
 - Conectividad extremo a extremo IPv4 e IPv6.
 - Servidores web redundantes mediante BGP Anycast.
-- Conmutación automática ante fallas de ISP o servicio web.
+- Conmutación automática ante fallas del acceso a un ISP o del servicio web.
 
 ## Arquitectura
 
@@ -53,10 +53,10 @@ Los dos servidores anuncian las mismas direcciones Anycast. Si Nginx deja de res
 
 | Componente | Cantidad | Función |
 |---|---:|---|
-| AS100 | 11 routers | ISP con OSPF, OSPFv3 e iBGP |
-| AS200 | 11 routers | ISP con IS-IS dual-stack e iBGP |
-| Route Reflectors | 4 | Reflexión de rutas iBGP |
-| Routers de borde | 4 | Interconexión eBGP redundante |
+| AS100 | 11 routers en total | ISP con OSPF, OSPFv3 e iBGP |
+| AS200 | 11 routers en total | ISP con IS-IS dual-stack e iBGP |
+| Route Reflectors | 4 | Incluidos en los 11 routers de cada ISP; reflexión de rutas iBGP |
+| Routers de borde | 4 | Incluidos en los 11 routers de cada ISP; interconexión eBGP redundante |
 | CPE | 2 | Acceso empresarial, VRRP y NAT |
 | Cliente Firefox | 1 | Pruebas gráficas desde la LAN |
 | Servidores web | 2 | Servicio redundante BGP Anycast |
@@ -124,7 +124,7 @@ La topología contiene:
 - Ubuntu Linux.
 - Docker.
 - Containerlab.
-- Comandos `ip` y `ss`.
+- Comandos `curl`, `ip` y `ss`.
 - Acceso administrativo mediante `sudo`.
 - Aproximadamente 8 GB de memoria RAM.
 - Puerto TCP 3001 disponible.
@@ -142,6 +142,10 @@ FRRouting 10.7.1
 
 ~~~text
 .
+├── docs/
+│   └── evidencias/
+│       ├── README.md
+│       └── reproducibilidad-2026-10-02.log
 ├── images/
 │   ├── base/
 │   │   └── .gitkeep
@@ -263,7 +267,7 @@ OK: TODAS LAS PRUEBAS TLN03 FUERON SUPERADAS
 
 ## Prueba de redundancia de los CPE
 
-Para simular una falla de ISP1:
+Para simular una falla del enlace WAN hacia ISP1:
 
 ~~~bash
 ./scripts/test-cpe-failover.sh
@@ -368,6 +372,9 @@ Para utilizar el proyecto desde una instalación nueva:
 git clone https://github.com/WilmerCO21/TLN03-Automatizacion-Programabilidad-de-Redes.git
 
 cd TLN03-Automatizacion-Programabilidad-de-Redes
+
+# Copiar la imagen entregada por el profesor.
+cp /RUTA/AL/ARCHIVO/frr_10.7.1-ssh.tar images/base/
 
 ./scripts/build.sh
 ./scripts/deploy.sh
