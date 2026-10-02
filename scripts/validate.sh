@@ -38,6 +38,49 @@ contar_bgp_establecidos() {
     '
 }
 
+contar_bgp_as_establecidos() {
+    contenedor="$1"
+    comando="$2"
+    as_remoto="$3"
+
+    docker exec "$contenedor" \
+      vtysh -c "$comando" 2>/dev/null |
+    awk -v asn="$as_remoto" '
+      $1 ~ /^[0-9a-fA-F:.]+$/ &&
+      $3 == asn &&
+      $10 ~ /^[0-9]+$/ {
+          cantidad++
+      }
+
+      END {
+          print cantidad + 0
+      }
+    '
+}
+
+comprobar_bgp_as() {
+    descripcion="$1"
+    contenedor="$2"
+    comando="$3"
+    as_remoto="$4"
+    esperado="$5"
+
+    resultado=$(
+        contar_bgp_as_establecidos \
+          "$contenedor" \
+          "$comando" \
+          "$as_remoto"
+    )
+
+    echo "$descripcion: $resultado de $esperado"
+
+    if [ "$resultado" -eq "$esperado" ]; then
+        correcto "$descripcion"
+    else
+        incorrecto "$descripcion"
+    fi
+}
+
 echo "=== VALIDACIÓN AUTOMÁTICA TLN03 ==="
 
 echo
@@ -182,7 +225,93 @@ if [ "$as200_bgp4" -eq 10 ] &&
 fi
 
 echo
-echo "=== 6. VRRP ==="
+echo "=== 6. eBGP EXTERNO ==="
+
+echo
+echo "--- INTERCONEXIÓN AS100-AS200 ---"
+
+for nodo in as100-borde1 as100-borde2; do
+    comprobar_bgp_as \
+      "$nodo IPv4 hacia AS200" \
+      "clab-pc01-$nodo" \
+      "show bgp ipv4 unicast summary" \
+      200 \
+      2
+
+    comprobar_bgp_as \
+      "$nodo IPv6 hacia AS200" \
+      "clab-pc01-$nodo" \
+      "show bgp ipv6 unicast summary" \
+      200 \
+      2
+done
+
+for nodo in as200-borde1 as200-borde2; do
+    comprobar_bgp_as \
+      "$nodo IPv4 hacia AS100" \
+      "clab-pc01-$nodo" \
+      "show bgp ipv4 unicast summary" \
+      100 \
+      2
+
+    comprobar_bgp_as \
+      "$nodo IPv6 hacia AS100" \
+      "clab-pc01-$nodo" \
+      "show bgp ipv6 unicast summary" \
+      100 \
+      2
+done
+
+echo
+echo "--- ACCESO EMPRESARIAL ---"
+
+comprobar_bgp_as \
+  "CPE-ISP1 IPv6 hacia AS100" \
+  clab-pc01-cpe-isp1 \
+  "show bgp ipv6 unicast summary" \
+  100 \
+  1
+
+comprobar_bgp_as \
+  "CPE-ISP2 IPv6 hacia AS200" \
+  clab-pc01-cpe-isp2 \
+  "show bgp ipv6 unicast summary" \
+  200 \
+  1
+
+echo
+echo "--- SERVIDORES ANYCAST ---"
+
+comprobar_bgp_as \
+  "Servidor-web1 IPv4 hacia AS100" \
+  clab-pc01-servidor-web1 \
+  "show bgp ipv4 unicast summary" \
+  100 \
+  1
+
+comprobar_bgp_as \
+  "Servidor-web1 IPv6 hacia AS100" \
+  clab-pc01-servidor-web1 \
+  "show bgp ipv6 unicast summary" \
+  100 \
+  1
+
+comprobar_bgp_as \
+  "Servidor-web2 IPv4 hacia AS200" \
+  clab-pc01-servidor-web2 \
+  "show bgp ipv4 unicast summary" \
+  200 \
+  1
+
+comprobar_bgp_as \
+  "Servidor-web2 IPv6 hacia AS200" \
+  clab-pc01-servidor-web2 \
+  "show bgp ipv6 unicast summary" \
+  200 \
+  1
+
+echo
+echo "=== 7. VRRP ==="
 
 maestros_v4=0
 maestros_v6=0
@@ -220,7 +349,7 @@ else
 fi
 
 echo
-echo "=== 7. RUTAS Y NAT DE LOS CPE ==="
+echo "=== 8. RUTAS Y NAT DE LOS CPE ==="
 
 for cpe in cpe-isp1 cpe-isp2; do
     contenedor="clab-pc01-$cpe"
@@ -251,7 +380,7 @@ for cpe in cpe-isp1 cpe-isp2; do
 done
 
 echo
-echo "=== 8. SERVIDORES WEB ==="
+echo "=== 9. SERVIDORES WEB ==="
 
 for servidor in servidor-web1 servidor-web2; do
     contenedor="clab-pc01-$servidor"
@@ -270,7 +399,7 @@ for servidor in servidor-web1 servidor-web2; do
 done
 
 echo
-echo "=== 9. SERVICIO ANYCAST ==="
+echo "=== 10. SERVICIO ANYCAST ==="
 
 respuesta_v4=$(
     docker exec clab-pc01-cliente-firefox \
@@ -319,7 +448,7 @@ else
 fi
 
 echo
-echo "=== 10. FIREFOX ==="
+echo "=== 11. FIREFOX ==="
 
 if curl -kfsS \
      --connect-timeout 5 \

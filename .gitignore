@@ -1,3 +1,6 @@
 ignorado.txt
 pc01/setup.py
 clab-*/
+
+# Imagen FRR proporcionada por el profesor
+images/base/*.tar

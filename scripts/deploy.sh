@@ -34,12 +34,39 @@ activos=$(
     wc -l
 )
 
-if [ "$activos" -gt 0 ]; then
+if [ "$activos" -eq "$ESPERADOS" ]; then
+    detenidos=$(
+        docker ps -a \
+          --filter "label=containerlab=$LABORATORIO" \
+          --filter status=exited \
+          --format '{{.Names}}'
+    )
+
+    if [ -n "$detenidos" ]; then
+        echo
+        echo "FALLA: existen contenedores adicionales detenidos:"
+        echo "$detenidos"
+        echo "Ejecuta primero: ./scripts/destroy.sh"
+        exit 1
+    fi
+
     echo
-    echo "El laboratorio ya está desplegado."
-    echo "Contenedores activos: $activos"
+    echo "El laboratorio ya está completamente desplegado."
+    echo "Contenedores activos: $activos de $ESPERADOS"
     echo "No se realizará un segundo despliegue."
     exit 0
+elif [ "$activos" -gt 0 ]; then
+    echo
+    echo "FALLA: se detectó un despliegue parcial."
+    echo "Contenedores activos: $activos de $ESPERADOS"
+
+    docker ps -a \
+      --filter "label=containerlab=$LABORATORIO" \
+      --format 'table {{.Names}}\t{{.Status}}\t{{.Image}}'
+
+    echo
+    echo "Ejecuta primero: ./scripts/destroy.sh"
+    exit 1
 fi
 
 restantes=$(

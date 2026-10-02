@@ -158,6 +158,30 @@ FRRouting 10.7.1
 └── README.md
 ~~~
 
+## Imagen FRR proporcionada por el profesor
+
+La imagen base `frr:10.7.1-ssh` es proporcionada por el profesor mediante Google Drive y no se descarga desde Docker Hub.
+
+El archivo entregado se denomina:
+
+~~~text
+frr_10.7.1-ssh.tar
+~~~
+
+Antes de construir el laboratorio se puede cargar manualmente:
+
+~~~bash
+docker load -i frr_10.7.1-ssh.tar
+~~~
+
+También se puede colocar el archivo en la siguiente ubicación:
+
+~~~text
+images/base/frr_10.7.1-ssh.tar
+~~~
+
+En ese caso, `scripts/build.sh` cargará automáticamente la imagen cuando no se encuentre instalada. El archivo `.tar` no se almacena en Git porque corresponde a una imagen externa proporcionada para el curso.
+
 ## Construcción de las imágenes
 
 Desde la raíz del proyecto:
@@ -213,6 +237,7 @@ El validador comprueba:
 - Vecindades OSPFv3.
 - Vecindades IS-IS.
 - Sesiones iBGP IPv4 e IPv6.
+- Sesiones eBGP entre proveedores, CPE y servidores Anycast.
 - Elección del MASTER VRRP.
 - Rutas predeterminadas de los CPE.
 - Reglas NAT IPv4.
