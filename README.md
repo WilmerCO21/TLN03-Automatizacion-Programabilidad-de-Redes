@@ -493,7 +493,7 @@ Los resultados de la prueba limpia, las validaciones de protocolos y las pruebas
 
 ## Conclusión
 
-El laboratorio demuestra una arquitectura empresarial dual-stack tolerante a fallas. La combinación de OSPF, OSPFv3, IS-IS, iBGP, eBGP, VRRP, NAT y BGP Anycast permite conservar la conectividad ante la caída de un proveedor o de un servidor web.
+El laboratorio demuestra una arquitectura empresarial dual-stack tolerante a fallas. La combinación de OSPF, OSPFv3, IS-IS, iBGP, eBGP, VRRP, NAT y BGP Anycast permite conservar la conectividad ante una falla del enlace de acceso a un proveedor o del servicio web.
 
 Los scripts incluidos permiten construir, desplegar, validar, probar y destruir el laboratorio de forma reproducible.
 
