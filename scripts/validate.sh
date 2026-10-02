@@ -1,0 +1,343 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+RAIZ=$(
+    cd "$(dirname "${BASH_SOURCE[0]}")/.."
+    pwd
+)
+
+TOPOLOGIA="$RAIZ/pc01/pc01.yml"
+LABORATORIO="pc01"
+ESPERADOS=27
+fallas=0
+
+correcto() {
+    echo "OK: $1"
+}
+
+incorrecto() {
+    echo "FALLA: $1"
+    fallas=$((fallas + 1))
+}
+
+contar_bgp_establecidos() {
+    contenedor="$1"
+    comando="$2"
+
+    docker exec "$contenedor" \
+      vtysh -c "$comando" 2>/dev/null |
+    awk '
+      $1 ~ /^[0-9a-fA-F:.]+$/ &&
+      $10 ~ /^[0-9]+$/ {
+          cantidad++
+      }
+
+      END {
+          print cantidad + 0
+      }
+    '
+}
+
+echo "=== VALIDACIÓN AUTOMÁTICA TLN03 ==="
+
+echo
+echo "=== 1. TOPOLOGÍA ==="
+
+if containerlab validate -t "$TOPOLOGIA"; then
+    correcto "topología válida"
+else
+    incorrecto "topología inválida"
+fi
+
+echo
+echo "=== 2. CONTENEDORES ==="
+
+activos=$(
+    docker ps \
+      --filter "label=containerlab=$LABORATORIO" \
+      --format '{{.Names}}' |
+    wc -l
+)
+
+echo "Contenedores activos: $activos de $ESPERADOS"
+
+if [ "$activos" -eq "$ESPERADOS" ]; then
+    correcto "todos los contenedores están activos"
+else
+    incorrecto "cantidad de contenedores incorrecta"
+fi
+
+detenidos=$(
+    docker ps -a \
+      --filter "label=containerlab=$LABORATORIO" \
+      --filter status=exited \
+      --format '{{.Names}}'
+)
+
+if [ -z "$detenidos" ]; then
+    correcto "no existen contenedores detenidos"
+else
+    incorrecto "existen contenedores detenidos"
+    echo "$detenidos"
+fi
+
+echo
+echo "=== 3. OSPF DUAL-STACK EN AS100 ==="
+
+ospf4=$(
+    docker exec clab-pc01-as100-p2 \
+      vtysh -c "show ip ospf neighbor" 2>/dev/null |
+    awk '$3 ~ /^Full/ {cantidad++} END {print cantidad + 0}'
+)
+
+ospf6=$(
+    docker exec clab-pc01-as100-p2 \
+      vtysh -c "show ipv6 ospf6 neighbor" 2>/dev/null |
+    awk '$4 ~ /^Full/ {cantidad++} END {print cantidad + 0}'
+)
+
+echo "Vecinos OSPF IPv4 en AS100-P2: $ospf4 de 5"
+echo "Vecinos OSPFv3 en AS100-P2:    $ospf6 de 5"
+
+if [ "$ospf4" -eq 5 ]; then
+    correcto "OSPF IPv4 de AS100"
+else
+    incorrecto "OSPF IPv4 de AS100"
+fi
+
+if [ "$ospf6" -eq 5 ]; then
+    correcto "OSPFv3 de AS100"
+else
+    incorrecto "OSPFv3 de AS100"
+fi
+
+echo
+echo "=== 4. IS-IS DUAL-STACK EN AS200 ==="
+
+isis=$(
+    docker exec clab-pc01-as200-p2 \
+      vtysh -c "show isis neighbor" 2>/dev/null |
+    awk '$4 == "Up" {cantidad++} END {print cantidad + 0}'
+)
+
+echo "Vecinos IS-IS en AS200-P2: $isis de 5"
+
+if [ "$isis" -eq 5 ]; then
+    correcto "IS-IS de AS200"
+else
+    incorrecto "IS-IS de AS200"
+fi
+
+echo
+echo "=== 5. iBGP CON ROUTE REFLECTORS ==="
+
+as100_bgp4=$(
+    contar_bgp_establecidos \
+      clab-pc01-as100-rr1 \
+      "show bgp ipv4 unicast summary"
+)
+
+as100_bgp6=$(
+    contar_bgp_establecidos \
+      clab-pc01-as100-rr1 \
+      "show bgp ipv6 unicast summary"
+)
+
+as200_bgp4=$(
+    contar_bgp_establecidos \
+      clab-pc01-as200-rr1 \
+      "show bgp ipv4 unicast summary"
+)
+
+as200_bgp6=$(
+    contar_bgp_establecidos \
+      clab-pc01-as200-rr1 \
+      "show bgp ipv6 unicast summary"
+)
+
+echo "AS100-RR1 IPv4: $as100_bgp4 de 10"
+echo "AS100-RR1 IPv6: $as100_bgp6 de 10"
+echo "AS200-RR1 IPv4: $as200_bgp4 de 10"
+echo "AS200-RR1 IPv6: $as200_bgp6 de 10"
+
+for resultado in \
+  "$as100_bgp4" \
+  "$as100_bgp6" \
+  "$as200_bgp4" \
+  "$as200_bgp6"; do
+
+    if [ "$resultado" -ne 10 ]; then
+        incorrecto "una comprobación iBGP no tiene 10 sesiones"
+    fi
+done
+
+if [ "$as100_bgp4" -eq 10 ] &&
+   [ "$as100_bgp6" -eq 10 ]; then
+    correcto "iBGP dual-stack de AS100"
+fi
+
+if [ "$as200_bgp4" -eq 10 ] &&
+   [ "$as200_bgp6" -eq 10 ]; then
+    correcto "iBGP dual-stack de AS200"
+fi
+
+echo
+echo "=== 6. VRRP ==="
+
+maestros_v4=0
+maestros_v6=0
+maestro_v4=""
+maestro_v6=""
+
+for cpe in cpe-isp1 cpe-isp2; do
+    contenedor="clab-pc01-$cpe"
+
+    if docker exec "$contenedor" \
+         ip -4 address show dev eth2 2>/dev/null |
+       grep '10.30.0.1/24' >/dev/null; then
+
+        maestros_v4=$((maestros_v4 + 1))
+        maestro_v4="$cpe"
+    fi
+
+    if docker exec "$contenedor" \
+         ip -6 address show dev eth2 2>/dev/null |
+       grep '2001:db8:30::1/64' >/dev/null; then
+
+        maestros_v6=$((maestros_v6 + 1))
+        maestro_v6="$cpe"
+    fi
+done
+
+echo "MASTER IPv4: ${maestro_v4:-ninguno}"
+echo "MASTER IPv6: ${maestro_v6:-ninguno}"
+
+if [ "$maestros_v4" -eq 1 ] &&
+   [ "$maestros_v6" -eq 1 ]; then
+    correcto "un único MASTER VRRP dual-stack"
+else
+    incorrecto "elección VRRP incorrecta"
+fi
+
+echo
+echo "=== 7. RUTAS Y NAT DE LOS CPE ==="
+
+for cpe in cpe-isp1 cpe-isp2; do
+    contenedor="clab-pc01-$cpe"
+
+    if docker exec "$contenedor" \
+         ip route show default 2>/dev/null |
+       grep 'dev eth1' >/dev/null; then
+        correcto "$cpe tiene ruta predeterminada IPv4"
+    else
+        incorrecto "$cpe no tiene ruta predeterminada IPv4"
+    fi
+
+    if docker exec "$contenedor" \
+         ip -6 route show default 2>/dev/null |
+       grep 'dev eth1' >/dev/null; then
+        correcto "$cpe tiene ruta predeterminada IPv6"
+    else
+        incorrecto "$cpe no tiene ruta predeterminada IPv6"
+    fi
+
+    if docker exec "$contenedor" \
+         iptables -t nat -S POSTROUTING 2>/dev/null |
+       grep '10.30.0.0/24.*MASQUERADE' >/dev/null; then
+        correcto "$cpe tiene NAT IPv4"
+    else
+        incorrecto "$cpe no tiene NAT IPv4"
+    fi
+done
+
+echo
+echo "=== 8. SERVIDORES WEB ==="
+
+for servidor in servidor-web1 servidor-web2; do
+    contenedor="clab-pc01-$servidor"
+
+    if docker exec "$contenedor" \
+         curl --noproxy '*' \
+         --connect-timeout 2 \
+         --max-time 3 \
+         -fsS http://127.0.0.1/ 2>/dev/null |
+       grep 'SERVICIO OPERATIVO' >/dev/null; then
+
+        correcto "$servidor está operativo"
+    else
+        incorrecto "$servidor no responde"
+    fi
+done
+
+echo
+echo "=== 9. SERVICIO ANYCAST ==="
+
+respuesta_v4=$(
+    docker exec clab-pc01-cliente-firefox \
+      curl --noproxy '*' \
+      --connect-timeout 5 \
+      --max-time 8 \
+      -fsSI http://203.0.113.10/ 2>/dev/null |
+    awk -F': ' '
+      tolower($1) == "x-tln03-node" {
+          gsub("\r", "", $2)
+          print $2
+          exit
+      }
+    '
+)
+
+respuesta_v6=$(
+    docker exec clab-pc01-cliente-firefox \
+      curl --noproxy '*' \
+      --connect-timeout 5 \
+      --max-time 8 \
+      -g -6 -fsSI \
+      'http://[2001:db8:500::10]/' 2>/dev/null |
+    awk -F': ' '
+      tolower($1) == "x-tln03-node" {
+          gsub("\r", "", $2)
+          print $2
+          exit
+      }
+    '
+)
+
+echo "Servidor IPv4: ${respuesta_v4:-sin respuesta}"
+echo "Servidor IPv6: ${respuesta_v6:-sin respuesta}"
+
+if [ -n "$respuesta_v4" ]; then
+    correcto "HTTP Anycast IPv4"
+else
+    incorrecto "HTTP Anycast IPv4"
+fi
+
+if [ -n "$respuesta_v6" ]; then
+    correcto "HTTP Anycast IPv6"
+else
+    incorrecto "HTTP Anycast IPv6"
+fi
+
+echo
+echo "=== 10. FIREFOX ==="
+
+if curl -kfsS \
+     --connect-timeout 5 \
+     https://127.0.0.1:3001/ \
+     >/dev/null 2>&1; then
+
+    correcto "interfaz gráfica de Firefox"
+else
+    incorrecto "interfaz gráfica de Firefox"
+fi
+
+echo
+echo "=== RESULTADO ==="
+
+if [ "$fallas" -eq 0 ]; then
+    echo "OK: TODAS LAS PRUEBAS TLN03 FUERON SUPERADAS"
+    exit 0
+else
+    echo "FALLA: se encontraron $fallas comprobaciones incorrectas"
+    exit 1
+fi
