@@ -139,14 +139,19 @@ topology:
       exec:
         - /usr/local/bin/setup-red.sh
 
-    servidor-web:
+    servidor-web1:
       kind: linux
-      image: nginx:1.30.5-alpine
+      image: tln03-web:1.0
       binds:
-        - ./configs/servidor-web/setup-red.sh:/usr/local/bin/setup-red.sh:ro
-        - ./configs/servidor-web/html/index.html:/usr/share/nginx/html/index.html:ro
-      exec:
-        - /usr/local/bin/setup-red.sh
+        - ./configs/servidor-web1/frr.conf:/etc/frr/frr.conf
+        - ./configs/servidor-web1/html/index.html:/usr/share/nginx/html/index.html:ro
+
+    servidor-web2:
+      kind: linux
+      image: tln03-web:1.0
+      binds:
+        - ./configs/servidor-web2/frr.conf:/etc/frr/frr.conf
+        - ./configs/servidor-web2/html/index.html:/usr/share/nginx/html/index.html:ro
 
   links:
     # ------------------------------------------
@@ -217,7 +222,8 @@ topology:
     # ------------------------------------------
     - endpoints: ["as100-pe1:eth3", "cpe-isp1:eth1"]
     - endpoints: ["as200-pe1:eth3", "cpe-isp2:eth1"]
-    - endpoints: ["as100-pe2:eth3", "servidor-web:eth1"]
+    - endpoints: ["as100-pe2:eth3", "servidor-web1:eth1"]
+    - endpoints: ["as200-pe2:eth3", "servidor-web2:eth1"]
 
     # LAN empresarial compartida mediante VRRP
     - endpoints: ["cpe-isp1:eth2", "br-empresa:cpe1"]
