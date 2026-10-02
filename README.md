@@ -113,6 +113,12 @@ La topología contiene:
 | Tránsito Web2 | `198.18.200.0/30` | `2001:db8:ff:200::/64` |
 | Servicio Anycast | `203.0.113.10/32` | `2001:db8:500::10/128` |
 
+> **Nota de diseño:** AS100 y AS200 reutilizan parte del direccionamiento
+> privado de infraestructura (`10.0.0.0/24`, `172.16.0.0/16` y
+> `fc10::/16`). Esto es intencional porque son dominios IGP aislados.
+> Esos prefijos internos no se anuncian entre proveedores mediante eBGP;
+> solamente se intercambian los prefijos autorizados por las prefix-lists.
+
 ## Requisitos
 
 - Ubuntu Linux.
@@ -122,7 +128,8 @@ La topología contiene:
 - Acceso administrativo mediante `sudo`.
 - Aproximadamente 8 GB de memoria RAM.
 - Puerto TCP 3001 disponible.
-- Conexión a Internet para descargar las imágenes la primera vez.
+- Archivo `frr_10.7.1-ssh.tar` proporcionado por el profesor o la imagen `frr:10.7.1-ssh` ya cargada en Docker.
+- Conexión a Internet para descargar Firefox y las dependencias durante la primera construcción.
 
 Versiones utilizadas durante las pruebas:
 
@@ -136,6 +143,8 @@ FRRouting 10.7.1
 ~~~text
 .
 ├── images/
+│   ├── base/
+│   │   └── .gitkeep
 │   ├── cpe/
 │   │   ├── Dockerfile
 │   │   ├── check-wan.sh
@@ -190,7 +199,7 @@ Desde la raíz del proyecto:
 ./scripts/build.sh
 ~~~
 
-El script descarga las imágenes base y construye las siguientes imágenes personalizadas:
+El script carga la imagen FRR proporcionada por el profesor, descarga Firefox y construye las siguientes imágenes personalizadas:
 
 ~~~text
 tln03-cpe:1.0
@@ -219,7 +228,7 @@ El script realiza automáticamente las siguientes acciones:
 8. Espera el inicio de los servicios.
 9. Comprueba que existan 27 contenedores activos.
 
-No se debe ejecutar un segundo despliegue mientras el laboratorio esté activo.
+Si el laboratorio ya posee los 27 contenedores activos, `deploy.sh` ejecuta la validación automática y evita crear un segundo despliegue.
 
 ## Validación automática
 
@@ -456,8 +465,8 @@ Las pruebas realizadas confirmaron:
 - Cinco vecinos OSPF IPv4 en AS100-P2.
 - Cinco vecinos OSPFv3 en AS100-P2.
 - Cinco vecinos IS-IS en AS200-P2.
-- Diez sesiones iBGP IPv4 en cada ISP.
-- Diez sesiones iBGP IPv6 en cada ISP.
+- Diez sesiones iBGP IPv4 en cada Route Reflector.
+- Diez sesiones iBGP IPv6 en cada Route Reflector.
 - Un único CPE MASTER para IPv4 e IPv6.
 - NAT IPv4 operativo en ambos CPE.
 - Acceso HTTP IPv4 e IPv6.
@@ -467,6 +476,13 @@ Las pruebas realizadas confirmaron:
 - Recuperación automática de Web1.
 - Retiro de rutas Anycast cuando Nginx falla.
 - Continuidad del servicio durante las pruebas.
+
+## Evidencias de validación
+
+Los resultados de la prueba limpia, las validaciones de protocolos y las pruebas de conmutación se encuentran en:
+
+- [Resumen de evidencias](docs/evidencias/README.md)
+- [Registro completo de reproducibilidad](docs/evidencias/reproducibilidad-2026-10-02.log)
 
 ## Conclusión
 

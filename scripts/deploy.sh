@@ -51,8 +51,14 @@ if [ "$activos" -eq "$ESPERADOS" ]; then
     fi
 
     echo
-    echo "El laboratorio ya está completamente desplegado."
+    echo "Se detectaron todos los contenedores del laboratorio."
     echo "Contenedores activos: $activos de $ESPERADOS"
+    echo "Se validará el despliegue existente."
+
+    "$RAIZ/scripts/validate.sh"
+
+    echo
+    echo "El laboratorio existente está completamente operativo."
     echo "No se realizará un segundo despliegue."
     exit 0
 elif [ "$activos" -gt 0 ]; then
@@ -115,9 +121,14 @@ ip -br link show br-empresa
 echo
 echo "=== COMPROBANDO PUERTO DE FIREFOX ==="
 
-if ss -ltnH |
-   awk '{print $4}' |
-   grep -Eq '(^|:)3001$'; then
+puertos_escuchando=$(
+    ss -ltnH |
+    awk '{print $4}'
+)
+
+if grep -E '(^|:)3001$' \
+     <<<"$puertos_escuchando" \
+     >/dev/null; then
 
     echo "FALLA: el puerto TCP 3001 está ocupado"
     ss -ltnp | grep ':3001' || true

@@ -1,0 +1,946 @@
+==================================================
+ PRUEBA LIMPIA DESDE EL CLON DE GITHUB
+==================================================
+
+=== 1. DESTRUYENDO DESPLIEGUE ANTERIOR ===
+=== DESTRUYENDO LABORATORIO TLN03 ===
+14:05:08 INFO Parsing & checking topology file=pc01.yml
+14:05:09 INFO Parsing & checking topology file=pc01.yml
+14:05:09 INFO Destroying lab name=pc01
+14:05:18 INFO Removed container name=clab-pc01-as200-pe1
+14:05:19 INFO Removed container name=clab-pc01-as200-p5
+14:05:20 INFO Removed container name=clab-pc01-as100-rr2
+14:05:20 INFO Removed container name=clab-pc01-as200-p1
+14:05:20 INFO Removed container name=clab-pc01-as100-pe1
+14:05:20 INFO Removed container name=clab-pc01-as200-rr1
+14:05:20 INFO Removed container name=clab-pc01-as200-pe2
+14:05:20 INFO Removed container name=clab-pc01-cliente-firefox
+14:05:21 INFO Removed container name=clab-pc01-as100-borde1
+14:05:22 INFO Removed container name=clab-pc01-as200-p3
+14:05:23 INFO Removed container name=clab-pc01-servidor-web2
+14:05:23 INFO Removed container name=clab-pc01-as200-p2
+14:05:23 INFO Removed container name=clab-pc01-as100-p2
+14:05:23 INFO Removed container name=clab-pc01-as100-p3
+14:05:23 INFO Removed container name=clab-pc01-as100-rr1
+14:05:23 INFO Removed container name=clab-pc01-cpe-isp1
+14:05:23 INFO Removed container name=clab-pc01-cpe-isp2
+14:05:23 INFO Removed container name=clab-pc01-servidor-web1
+14:05:23 INFO Removed container name=clab-pc01-as100-p5
+14:05:23 INFO Removed container name=clab-pc01-as100-p4
+14:05:23 INFO Removed container name=clab-pc01-as100-borde2
+14:05:23 INFO Removed container name=clab-pc01-as200-p4
+14:05:23 INFO Removed container name=clab-pc01-as200-rr2
+14:05:23 INFO Removed container name=clab-pc01-as200-borde1
+14:05:23 INFO Removed container name=clab-pc01-as100-p1
+14:05:23 INFO Removed container name=clab-pc01-as200-borde2
+14:05:23 INFO Removed container name=clab-pc01-as100-pe2
+14:05:23 INFO Removing host entries path=/etc/hosts
+14:05:23 INFO Removing SSH config path=/etc/ssh/ssh_config.d/clab-pc01.conf
+
+=== COMPROBANDO CONTENEDORES ===
+OK: no quedan contenedores del laboratorio
+
+El puente br-empresa y las imágenes Docker se conservaron.
+
+=== MEMORIA DISPONIBLE ===
+               total       usado       libre  compartido   búf/caché  disponible
+Mem:           7,2Gi       3,7Gi       1,8Gi       756Ki       2,0Gi       3,6Gi
+Inter:         3,8Gi       1,2Gi       2,6Gi
+
+=== 2. ELIMINANDO IMÁGENES PERSONALIZADAS ===
+Untagged: tln03-cpe:1.0
+Deleted: sha256:cbb849cf9b1f0cf9ad373cd48402a4dea1fddaead9db6e72bcdee95ea270fad9
+Untagged: tln03-web:1.0
+Deleted: sha256:acafbf9b272c89939e08fa00b59bae12ab417a7966968e1a9b21c730bdf1cf21
+Untagged: frr:10.7.1-ssh
+Deleted: sha256:e00ad1783014d6c7dccb24d5558f9c4e63350b0c44c1caaf8cff3541626a4ba5
+
+=== 3. CONSTRUYENDO DESDE CERO ===
+=== PREPARANDO IMAGEN FRR DEL CURSO ===
+Cargando imagen proporcionada por el profesor:
+/home/wilmer/Pruebas-TLN03/TLN03-desde-GitHub/images/base/frr_10.7.1-ssh.tar
+Loaded image: frr:10.7.1-ssh
+OK: frr:10.7.1-ssh cargada correctamente
+
+=== DESCARGANDO IMAGEN DE FIREFOX ===
+1157.0build1-1xtradeb1.2404.1-ls125: Pulling from linuxserver/firefox
+Digest: sha256:eb9aa4c4e8097e14a7a31377145b9c2409c3abdc945b02fc1479e3484840ff99
+Status: Image is up to date for lscr.io/linuxserver/firefox:1157.0build1-1xtradeb1.2404.1-ls125
+lscr.io/linuxserver/firefox:1157.0build1-1xtradeb1.2404.1-ls125
+
+=== CONSTRUYENDO IMAGEN CPE ===
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 477B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/frr:10.7.1-ssh
+#2 DONE 0.1s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 DONE 0.0s
+
+#5 [1/4] FROM docker.io/library/frr:10.7.1-ssh@sha256:e00ad1783014d6c7dccb24d5558f9c4e63350b0c44c1caaf8cff3541626a4ba5
+#5 resolve docker.io/library/frr:10.7.1-ssh@sha256:e00ad1783014d6c7dccb24d5558f9c4e63350b0c44c1caaf8cff3541626a4ba5 0.0s done
+#5 DONE 0.1s
+
+#4 [internal] load build context
+#4 transferring context: 66B done
+#4 DONE 0.0s
+
+#6 [2/4] RUN apt-get update     && DEBIAN_FRONTEND=noninteractive apt-get install -y         --no-install-recommends         keepalived         iptables         nftables     && rm -rf /var/lib/apt/lists/*
+#6 CACHED
+
+#7 [3/4] COPY start-cpe.sh check-wan.sh /usr/local/bin/
+#7 CACHED
+
+#8 [4/4] RUN chmod 0755 /usr/local/bin/start-cpe.sh /usr/local/bin/check-wan.sh     && mkdir -p /run/keepalived
+#8 CACHED
+
+#9 exporting to image
+#9 exporting layers 0.0s done
+#9 exporting manifest sha256:d518f2a363b6f3705b99bdfe4bb215837492d1e87eb3fe2c7cc56ef460e64c86 0.0s done
+#9 exporting config sha256:5637699c1ad1cba9b1b9d4b98bb0bf793be51c26bfb4f8c876350b5290f5a747 done
+#9 exporting attestation manifest sha256:2187b12c636a30616f151704dd682ac76787cf555afe2f3cc932e9f3657384c6
+#9 exporting attestation manifest sha256:2187b12c636a30616f151704dd682ac76787cf555afe2f3cc932e9f3657384c6 0.0s done
+#9 exporting manifest list sha256:4278be3a9a5db18eae9c0c31e742aee8253d1ca5ceede0bb7d22aef83039e2f1 0.0s done
+#9 naming to docker.io/library/tln03-cpe:1.0 done
+#9 unpacking to docker.io/library/tln03-cpe:1.0
+#9 unpacking to docker.io/library/tln03-cpe:1.0 2.1s done
+#9 DONE 2.4s
+
+=== CONSTRUYENDO IMAGEN WEB ===
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 496B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/frr:10.7.1-ssh
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/5] FROM docker.io/library/frr:10.7.1-ssh@sha256:e00ad1783014d6c7dccb24d5558f9c4e63350b0c44c1caaf8cff3541626a4ba5
+#4 resolve docker.io/library/frr:10.7.1-ssh@sha256:e00ad1783014d6c7dccb24d5558f9c4e63350b0c44c1caaf8cff3541626a4ba5 0.1s done
+#4 DONE 0.1s
+
+#5 [internal] load build context
+#5 transferring context: 1.13kB done
+#5 DONE 0.0s
+
+#6 [2/5] RUN apt-get update     && DEBIAN_FRONTEND=noninteractive apt-get install -y         --no-install-recommends         nginx         procps         curl     && rm -rf /var/lib/apt/lists/*
+#6 CACHED
+
+#7 [3/5] COPY start-web.sh /usr/local/bin/start-web.sh
+#7 DONE 1.0s
+
+#8 [4/5] COPY default.conf /etc/nginx/sites-available/default
+#8 DONE 0.1s
+
+#9 [5/5] RUN chmod 0755 /usr/local/bin/start-web.sh     && mkdir -p /usr/share/nginx/html
+#9 DONE 0.6s
+
+#10 exporting to image
+#10 exporting layers
+#10 exporting layers 0.3s done
+#10 exporting manifest sha256:269d49e72b56aea3eb8b63cf910d062981e92711000aca3a76ebc4f89bad8a1e 0.0s done
+#10 exporting config sha256:fa65b474549173f9eabbf76691e185b0455a10ef49b0c1b2209ead048369bd2e 0.0s done
+#10 exporting attestation manifest sha256:7d57a0661ab8069d57a11ad139e31aa2648a7291fd79109250b9789486396466 0.0s done
+#10 exporting manifest list sha256:d812adc62e2afede56694bec435675475e5530f7c00ba900c5c8f0a87df0dfc9
+#10 exporting manifest list sha256:d812adc62e2afede56694bec435675475e5530f7c00ba900c5c8f0a87df0dfc9 0.0s done
+#10 naming to docker.io/library/tln03-web:1.0 done
+#10 unpacking to docker.io/library/tln03-web:1.0
+#10 unpacking to docker.io/library/tln03-web:1.0 0.4s done
+#10 DONE 1.1s
+
+=== IMÁGENES DISPONIBLES ===
+frr:10.7.1-ssh -> sha256:e00ad1783014d6c7dccb24d5558f9c4e63350b0c44c1caaf8cff3541626a4ba5
+tln03-cpe:1.0 -> sha256:4278be3a9a5db18eae9c0c31e742aee8253d1ca5ceede0bb7d22aef83039e2f1
+tln03-web:1.0 -> sha256:d812adc62e2afede56694bec435675475e5530f7c00ba900c5c8f0a87df0dfc9
+lscr.io/linuxserver/firefox:1157.0build1-1xtradeb1.2404.1-ls125 -> sha256:eb9aa4c4e8097e14a7a31377145b9c2409c3abdc945b02fc1479e3484840ff99
+
+OK: imágenes preparadas correctamente
+
+=== 4. DESPLEGANDO DESDE EL CLON ===
+=== VALIDANDO TOPOLOGÍA ===
+14:05:51 INFO Parsing & checking topology file=pc01.yml
+14:05:51 INFO Topology is valid name=pc01 nodes=28 links=43
+
+=== COMPROBANDO IMÁGENES ===
+OK: todas las imágenes están disponibles
+
+=== PREPARANDO PUENTE EMPRESARIAL ===
+YA EXISTE: br-empresa
+br-empresa       DOWN           fe:ab:e8:35:9a:c6 <NO-CARRIER,BROADCAST,MULTICAST,UP>
+
+=== COMPROBANDO PUERTO DE FIREFOX ===
+OK: puerto 3001 disponible
+
+=== DESPLEGANDO TLN03 ===
+14:05:52 INFO Containerlab started version=0.79.0
+14:05:52 INFO Parsing & checking topology file=pc01.yml
+14:05:52 INFO Creating docker network name=clab IPv4 subnet=172.20.20.0/24 IPv6 subnet=3fff:172:20:20::/64 MTU=0
+14:05:53 INFO Creating lab directory path=/home/wilmer/Pruebas-TLN03/TLN03-desde-GitHub/pc01/clab-pc01
+14:05:53 INFO Creating container name=as200-p5
+14:05:53 INFO Creating container name=as200-p2
+14:05:53 INFO Creating container name=servidor-web1
+14:05:53 INFO Creating container name=as100-borde2
+14:05:55 INFO Creating container name=as100-pe2
+14:05:56 INFO Creating container name=as100-rr1
+14:05:56 INFO Creating container name=as200-borde2
+14:05:57 INFO Creating container name=cliente-firefox
+14:05:59 INFO Created link: as100-pe2:eth3 ▪┄┄▪ servidor-web1:eth1
+14:05:59 INFO Creating container name=as100-p1
+14:06:01 INFO Creating container name=as200-p4
+14:06:03 INFO Created link: as100-borde2:eth2 ▪┄┄▪ as200-borde2:eth2
+14:06:03 INFO Creating container name=as200-pe1
+14:06:06 INFO Created link: as100-rr1:eth1 ▪┄┄▪ as100-p1:eth3
+14:06:06 INFO Created link: as100-pe2:eth2 ▪┄┄▪ as100-p1:eth4
+14:06:07 INFO Created link: cliente-firefox:eth1 ▪┄┄▪ br-empresa:cliente
+14:06:07 INFO Creating container name=cpe-isp1
+14:06:07 INFO Creating container name=as100-p3
+14:06:08 INFO Created link: as200-p4:eth2 ▪┄┄▪ as200-p5:eth1
+14:06:08 INFO Created link: as200-p2:eth3 ▪┄┄▪ as200-p4:eth3
+14:06:09 INFO Created link: as200-borde2:eth3 ▪┄┄▪ as200-p4:eth5
+14:06:09 INFO Creating container name=servidor-web2
+14:06:11 INFO Created link: as200-pe1:eth1 ▪┄┄▪ as200-p4:eth4
+14:06:11 INFO Created link: as200-pe1:eth2 ▪┄┄▪ as200-p5:eth3
+14:06:12 INFO Creating container name=as200-rr1
+14:06:19 INFO Creating container name=as100-p4
+14:06:20 INFO Created link: cpe-isp1:eth2 ▪┄┄▪ br-empresa:cpe1
+14:06:21 INFO Created link: as200-rr1:eth2 ▪┄┄▪ as200-p2:eth4
+14:06:21 INFO Creating container name=as100-p2
+14:06:22 INFO Creating container name=as200-p3
+14:06:27 INFO Created link: as100-p3:eth2 ▪┄┄▪ as100-p4:eth1
+14:06:28 INFO Created link: as100-p1:eth1 ▪┄┄▪ as100-p2:eth1
+14:06:28 INFO Created link: as100-p2:eth2 ▪┄┄▪ as100-p3:eth1
+14:06:28 INFO Created link: as100-p2:eth3 ▪┄┄▪ as100-p4:eth3
+14:06:28 INFO Created link: as100-borde2:eth3 ▪┄┄▪ as100-p4:eth5
+14:06:28 INFO Creating container name=as100-borde1
+14:06:28 INFO Created link: as100-rr1:eth2 ▪┄┄▪ as100-p2:eth4
+14:06:29 INFO Creating container name=as200-pe2
+14:06:30 INFO Created link: as200-p2:eth2 ▪┄┄▪ as200-p3:eth1
+14:06:30 INFO Created link: as200-p3:eth2 ▪┄┄▪ as200-p4:eth1
+14:06:33 INFO Creating container name=as200-rr2
+14:06:35 INFO Created link: as100-borde1:eth2 ▪┄┄▪ as200-borde2:eth1
+14:06:35 INFO Created link: as100-borde1:eth3 ▪┄┄▪ as100-p3:eth4
+14:06:35 INFO Creating container name=as100-pe1
+14:06:38 INFO Created link: as200-pe2:eth1 ▪┄┄▪ as200-p5:eth4
+14:06:40 INFO Created link: as200-pe2:eth3 ▪┄┄▪ servidor-web2:eth1
+14:06:40 INFO Creating container name=as100-p5
+14:06:44 INFO Created link: as200-rr2:eth1 ▪┄┄▪ as200-p2:eth5
+14:06:45 INFO Created link: as100-pe1:eth1 ▪┄┄▪ as100-p4:eth4
+14:06:45 INFO Created link: as200-rr2:eth2 ▪┄┄▪ as200-p3:eth3
+14:06:46 INFO Creating container name=cpe-isp2
+14:06:46 INFO Created link: as100-pe1:eth3 ▪┄┄▪ cpe-isp1:eth1
+14:06:46 INFO Creating container name=as200-p1
+14:06:52 INFO Created link: as100-p4:eth2 ▪┄┄▪ as100-p5:eth1
+14:06:53 INFO Created link: as100-p5:eth2 ▪┄┄▪ as100-p1:eth2
+14:06:55 INFO Created link: as100-pe1:eth2 ▪┄┄▪ as100-p5:eth3
+14:06:58 INFO Created link: as100-pe2:eth1 ▪┄┄▪ as100-p5:eth4
+14:06:59 INFO Creating container name=as100-rr2
+14:07:07 INFO Created link: as200-pe1:eth3 ▪┄┄▪ cpe-isp2:eth1
+14:07:08 INFO Created link: cpe-isp2:eth2 ▪┄┄▪ br-empresa:cpe2
+14:07:09 INFO Created link: as200-p1:eth1 ▪┄┄▪ as200-p2:eth1
+14:07:10 INFO Created link: as200-p5:eth2 ▪┄┄▪ as200-p1:eth2
+14:07:12 INFO Created link: as200-rr1:eth1 ▪┄┄▪ as200-p1:eth3
+14:07:13 INFO Created link: as200-pe2:eth2 ▪┄┄▪ as200-p1:eth4
+14:07:13 INFO Creating container name=as200-borde1
+14:07:19 INFO Created link: as100-rr2:eth1 ▪┄┄▪ as100-p2:eth5
+14:07:20 INFO Created link: as100-rr2:eth2 ▪┄┄▪ as100-p3:eth3
+14:07:29 INFO Created link: as100-borde1:eth1 ▪┄┄▪ as200-borde1:eth1
+14:07:29 INFO Created link: as100-borde2:eth1 ▪┄┄▪ as200-borde1:eth2
+14:07:29 INFO Created link: as200-borde1:eth3 ▪┄┄▪ as200-p3:eth4
+14:07:38 INFO Executed command node=cliente-firefox command=/usr/local/bin/setup-red.sh
+  stdout=
+  │ [FIREFOX] Esperando interfaz empresarial eth1
+  │ [FIREFOX] Red empresarial configurada
+
+14:07:38 INFO Executed command node=cpe-isp1 command=/usr/local/bin/setup-nat.sh
+  stdout=
+  │ [CPE-ISP1] Configurando rutas y NAT
+  │ [CPE-ISP1] Esperando dirección WAN en eth1
+  │ [CPE-ISP1] Dirección WAN disponible
+  │ [CPE-ISP1] NAT IPv4 operativo
+
+14:07:38 INFO Executed command node=cpe-isp2 command=/usr/local/bin/setup-nat.sh
+  stdout=
+  │ [CPE-ISP2] Configurando rutas y NAT
+  │ [CPE-ISP2] Esperando dirección WAN en eth1
+  │ [CPE-ISP2] Dirección WAN disponible
+  │ [CPE-ISP2] NAT IPv4 operativo
+
+14:07:43 INFO Adding host entries path=/etc/hosts
+14:07:44 INFO Adding SSH config for nodes path=/etc/ssh/ssh_config.d/clab-pc01.conf
+[1m╭[0m[1m───────────────────────────[0m[1m┬[0m[1m─────────────────────────────────────────────────────────────────[0m[1m┬[0m[1m─────────[0m[1m┬[0m[1m────────────────────[0m[1m╮[0m
+[1m│[0m[1m            Name           [0m[1m│[0m[1m                            Kind/Image                           [0m[1m│[0m[1m  State  [0m[1m│[0m[1m   IPv4/6 Address   [0m[1m│[0m
+[1m├[0m[1m───────────────────────────[0m[1m┼[0m[1m─────────────────────────────────────────────────────────────────[0m[1m┼[0m[1m─────────[0m[1m┼[0m[1m────────────────────[0m[1m┤[0m
+│ clab-pc01-as100-borde1    │ linux                                                           │ running │ 172.20.20.20       │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::14 │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as100-borde2    │ linux                                                           │ running │ 172.20.20.5        │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::5  │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as100-p1        │ linux                                                           │ running │ 172.20.20.10       │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::a  │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as100-p2        │ linux                                                           │ running │ 172.20.20.17       │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::11 │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as100-p3        │ linux                                                           │ running │ 172.20.20.14       │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::e  │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as100-p4        │ linux                                                           │ running │ 172.20.20.18       │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::12 │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as100-p5        │ linux                                                           │ running │ 172.20.20.24       │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::18 │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as100-pe1       │ linux                                                           │ running │ 172.20.20.23       │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::17 │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as100-pe2       │ linux                                                           │ running │ 172.20.20.6        │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::6  │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as100-rr1       │ linux                                                           │ running │ 172.20.20.7        │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::7  │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as100-rr2       │ linux                                                           │ running │ 172.20.20.27       │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::1b │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as200-borde1    │ linux                                                           │ running │ 172.20.20.28       │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::1c │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as200-borde2    │ linux                                                           │ running │ 172.20.20.8        │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::8  │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as200-p1        │ linux                                                           │ running │ 172.20.20.26       │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::1a │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as200-p2        │ linux                                                           │ running │ 172.20.20.3        │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::3  │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as200-p3        │ linux                                                           │ running │ 172.20.20.19       │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::13 │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as200-p4        │ linux                                                           │ running │ 172.20.20.11       │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::b  │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as200-p5        │ linux                                                           │ running │ 172.20.20.2        │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::2  │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as200-pe1       │ linux                                                           │ running │ 172.20.20.12       │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::c  │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as200-pe2       │ linux                                                           │ running │ 172.20.20.21       │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::15 │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as200-rr1       │ linux                                                           │ running │ 172.20.20.16       │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::10 │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-as200-rr2       │ linux                                                           │ running │ 172.20.20.22       │
+│                           │ frr:10.7.1-ssh                                                  │         │ 3fff:172:20:20::16 │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-cliente-firefox │ linux                                                           │ running │ 172.20.20.9        │
+│                           │ lscr.io/linuxserver/firefox:1157.0build1-1xtradeb1.2404.1-ls125 │         │ 3fff:172:20:20::9  │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-cpe-isp1        │ linux                                                           │ running │ 172.20.20.15       │
+│                           │ tln03-cpe:1.0                                                   │         │ 3fff:172:20:20::f  │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-cpe-isp2        │ linux                                                           │ running │ 172.20.20.25       │
+│                           │ tln03-cpe:1.0                                                   │         │ 3fff:172:20:20::19 │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-servidor-web1   │ linux                                                           │ running │ 172.20.20.4        │
+│                           │ tln03-web:1.0                                                   │         │ 3fff:172:20:20::4  │
+├───────────────────────────┼─────────────────────────────────────────────────────────────────┼─────────┼────────────────────┤
+│ clab-pc01-servidor-web2   │ linux                                                           │ running │ 172.20.20.13       │
+│                           │ tln03-web:1.0                                                   │         │ 3fff:172:20:20::d  │
+╰───────────────────────────┴─────────────────────────────────────────────────────────────────┴─────────┴────────────────────╯
+
+=== ESPERANDO INICIO DE SERVICIOS ===
+Contenedores activos: 27 de 27
+
+OK: laboratorio desplegado correctamente
+Firefox: https://127.0.0.1:3001
+
+=== 5. ESPERANDO CONVERGENCIA ===
+
+Validación 1 de 6
+=== VALIDACIÓN AUTOMÁTICA TLN03 ===
+
+=== 1. TOPOLOGÍA ===
+14:08:20 INFO Parsing & checking topology file=pc01.yml
+14:08:20 INFO Topology is valid name=pc01 nodes=28 links=43
+OK: topología válida
+
+=== 2. CONTENEDORES ===
+Contenedores activos: 27 de 27
+OK: todos los contenedores están activos
+OK: no existen contenedores detenidos
+
+=== 3. OSPF DUAL-STACK EN AS100 ===
+as100-rr1 IPv4: 2 de 2
+as100-rr1 IPv6: 2 de 2
+OK: OSPF IPv4 de as100-rr1
+OK: OSPFv3 de as100-rr1
+as100-rr2 IPv4: 2 de 2
+as100-rr2 IPv6: 2 de 2
+OK: OSPF IPv4 de as100-rr2
+OK: OSPFv3 de as100-rr2
+as100-p1 IPv4: 4 de 4
+as100-p1 IPv6: 4 de 4
+OK: OSPF IPv4 de as100-p1
+OK: OSPFv3 de as100-p1
+as100-p2 IPv4: 5 de 5
+as100-p2 IPv6: 5 de 5
+OK: OSPF IPv4 de as100-p2
+OK: OSPFv3 de as100-p2
+as100-p3 IPv4: 4 de 4
+as100-p3 IPv6: 4 de 4
+OK: OSPF IPv4 de as100-p3
+OK: OSPFv3 de as100-p3
+as100-p4 IPv4: 5 de 5
+as100-p4 IPv6: 5 de 5
+OK: OSPF IPv4 de as100-p4
+OK: OSPFv3 de as100-p4
+as100-p5 IPv4: 4 de 4
+as100-p5 IPv6: 4 de 4
+OK: OSPF IPv4 de as100-p5
+OK: OSPFv3 de as100-p5
+as100-pe1 IPv4: 2 de 2
+as100-pe1 IPv6: 2 de 2
+OK: OSPF IPv4 de as100-pe1
+OK: OSPFv3 de as100-pe1
+as100-pe2 IPv4: 2 de 2
+as100-pe2 IPv6: 2 de 2
+OK: OSPF IPv4 de as100-pe2
+OK: OSPFv3 de as100-pe2
+as100-borde1 IPv4: 1 de 1
+as100-borde1 IPv6: 1 de 1
+OK: OSPF IPv4 de as100-borde1
+OK: OSPFv3 de as100-borde1
+as100-borde2 IPv4: 1 de 1
+as100-borde2 IPv6: 1 de 1
+OK: OSPF IPv4 de as100-borde2
+OK: OSPFv3 de as100-borde2
+
+=== 4. IS-IS DUAL-STACK EN AS200 ===
+as200-rr1: 2 de 2
+OK: IS-IS dual-stack de as200-rr1
+as200-rr2: 2 de 2
+OK: IS-IS dual-stack de as200-rr2
+as200-p1: 4 de 4
+OK: IS-IS dual-stack de as200-p1
+as200-p2: 5 de 5
+OK: IS-IS dual-stack de as200-p2
+as200-p3: 4 de 4
+OK: IS-IS dual-stack de as200-p3
+as200-p4: 5 de 5
+OK: IS-IS dual-stack de as200-p4
+as200-p5: 4 de 4
+OK: IS-IS dual-stack de as200-p5
+as200-pe1: 2 de 2
+OK: IS-IS dual-stack de as200-pe1
+as200-pe2: 2 de 2
+OK: IS-IS dual-stack de as200-pe2
+as200-borde1: 1 de 1
+OK: IS-IS dual-stack de as200-borde1
+as200-borde2: 1 de 1
+OK: IS-IS dual-stack de as200-borde2
+
+=== 5. iBGP CON ROUTE REFLECTORS ===
+AS100-RR1 IPv4: 10 de 10
+OK: AS100-RR1 IPv4
+AS100-RR1 IPv6: 10 de 10
+OK: AS100-RR1 IPv6
+AS100-RR2 IPv4: 10 de 10
+OK: AS100-RR2 IPv4
+AS100-RR2 IPv6: 10 de 10
+OK: AS100-RR2 IPv6
+AS200-RR1 IPv4: 10 de 10
+OK: AS200-RR1 IPv4
+AS200-RR1 IPv6: 10 de 10
+OK: AS200-RR1 IPv6
+AS200-RR2 IPv4: 10 de 10
+OK: AS200-RR2 IPv4
+AS200-RR2 IPv6: 10 de 10
+OK: AS200-RR2 IPv6
+
+=== 6. eBGP EXTERNO ===
+
+--- INTERCONEXIÓN AS100-AS200 ---
+as100-borde1 IPv4 hacia AS200: 2 de 2
+OK: as100-borde1 IPv4 hacia AS200
+as100-borde1 IPv6 hacia AS200: 2 de 2
+OK: as100-borde1 IPv6 hacia AS200
+as100-borde2 IPv4 hacia AS200: 2 de 2
+OK: as100-borde2 IPv4 hacia AS200
+as100-borde2 IPv6 hacia AS200: 2 de 2
+OK: as100-borde2 IPv6 hacia AS200
+as200-borde1 IPv4 hacia AS100: 2 de 2
+OK: as200-borde1 IPv4 hacia AS100
+as200-borde1 IPv6 hacia AS100: 2 de 2
+OK: as200-borde1 IPv6 hacia AS100
+as200-borde2 IPv4 hacia AS100: 2 de 2
+OK: as200-borde2 IPv4 hacia AS100
+as200-borde2 IPv6 hacia AS100: 2 de 2
+OK: as200-borde2 IPv6 hacia AS100
+
+--- ACCESO EMPRESARIAL ---
+CPE-ISP1 IPv6 hacia AS100: 1 de 1
+OK: CPE-ISP1 IPv6 hacia AS100
+CPE-ISP2 IPv6 hacia AS200: 1 de 1
+OK: CPE-ISP2 IPv6 hacia AS200
+
+--- SERVIDORES ANYCAST ---
+Servidor-web1 IPv4 hacia AS100: 1 de 1
+OK: Servidor-web1 IPv4 hacia AS100
+Servidor-web1 IPv6 hacia AS100: 1 de 1
+OK: Servidor-web1 IPv6 hacia AS100
+Servidor-web2 IPv4 hacia AS200: 1 de 1
+OK: Servidor-web2 IPv4 hacia AS200
+Servidor-web2 IPv6 hacia AS200: 1 de 1
+OK: Servidor-web2 IPv6 hacia AS200
+
+=== 7. VRRP ===
+MASTER IPv4: cpe-isp1
+MASTER IPv6: cpe-isp1
+OK: un único MASTER VRRP dual-stack
+
+=== 8. RUTAS Y NAT DE LOS CPE ===
+OK: cpe-isp1 tiene ruta predeterminada IPv4
+OK: cpe-isp1 tiene ruta predeterminada IPv6
+OK: cpe-isp1 tiene NAT IPv4
+OK: cpe-isp2 tiene ruta predeterminada IPv4
+OK: cpe-isp2 tiene ruta predeterminada IPv6
+OK: cpe-isp2 tiene NAT IPv4
+
+=== 9. SERVIDORES WEB ===
+OK: servidor-web1 está operativo
+OK: servidor-web2 está operativo
+
+=== 10. SERVICIO ANYCAST ===
+Servidor IPv4: servidor-web1
+Servidor IPv6: servidor-web1
+OK: HTTP Anycast IPv4
+OK: HTTP Anycast IPv6
+
+=== 11. FIREFOX ===
+OK: interfaz gráfica de Firefox
+
+=== RESULTADO ===
+OK: TODAS LAS PRUEBAS TLN03 FUERON SUPERADAS
+
+=== 6. FAILOVER DE LOS CPE ===
+=== PRUEBA DE CONMUTACIÓN DE CPE ===
+
+=== 1. ESTADO INICIAL ===
+OK: CPE-ISP1 posee las VIP IPv4 e IPv6
+OK: HTTP IPv4 e IPv6 funcionan antes de la falla
+
+=== 2. SIMULANDO FALLA DE ISP1 ===
+eth1@if2638      DOWN           aa:c1:ab:ca:d4:3e <BROADCAST,MULTICAST>
+
+=== 3. ESPERANDO TRANSFERENCIA DE LAS VIP ===
+OK: CPE-ISP2 asumió ambas VIP en 1 segundos
+
+=== 4. COMPROBANDO SERVICIO MEDIANTE ISP2 ===
+Intento 1: HTTP-IPv4=1 HTTP-IPv6=1
+OK: servicio dual-stack continúa mediante ISP2
+
+=== 5. RESTAURANDO ISP1 ===
+eth1@if2638      UP             aa:c1:ab:ca:d4:3e <BROADCAST,MULTICAST,UP,LOWER_UP>
+
+=== 6. ESPERANDO RECUPERACIÓN DE CPE-ISP1 ===
+Intento 1: esperando recuperación de CPE-ISP1
+Intento 2: esperando recuperación de CPE-ISP1
+Intento 3: esperando recuperación de CPE-ISP1
+Intento 4: esperando recuperación de CPE-ISP1
+OK: CPE-ISP1 recuperó ambas VIP en 11 segundos
+
+=== 7. COMPROBANDO SERVICIO FINAL ===
+OK: HTTP IPv4 e IPv6 recuperados mediante ISP1
+
+=== 8. ESTADO FINAL DE LAS VIP ===
+eth2@if2620      UP             10.30.0.2/24 10.30.0.1/24 2001:db8:30::1/64 2001:db8:30::2/64 fe80::a8c1:abff:fe5a:4820/64
+eth2@if2622      UP             10.30.0.3/24 2001:db8:30::3/64 fe80::a8c1:abff:feda:cd8e/64
+
+=== RESULTADO ===
+OK: FAILOVER CPE ISP1/ISP2 SUPERADO
+=== VALIDACIÓN AUTOMÁTICA TLN03 ===
+
+=== 1. TOPOLOGÍA ===
+14:11:15 INFO Parsing & checking topology file=pc01.yml
+14:11:15 INFO Topology is valid name=pc01 nodes=28 links=43
+OK: topología válida
+
+=== 2. CONTENEDORES ===
+Contenedores activos: 27 de 27
+OK: todos los contenedores están activos
+OK: no existen contenedores detenidos
+
+=== 3. OSPF DUAL-STACK EN AS100 ===
+as100-rr1 IPv4: 2 de 2
+as100-rr1 IPv6: 2 de 2
+OK: OSPF IPv4 de as100-rr1
+OK: OSPFv3 de as100-rr1
+as100-rr2 IPv4: 2 de 2
+as100-rr2 IPv6: 2 de 2
+OK: OSPF IPv4 de as100-rr2
+OK: OSPFv3 de as100-rr2
+as100-p1 IPv4: 4 de 4
+as100-p1 IPv6: 4 de 4
+OK: OSPF IPv4 de as100-p1
+OK: OSPFv3 de as100-p1
+as100-p2 IPv4: 5 de 5
+as100-p2 IPv6: 5 de 5
+OK: OSPF IPv4 de as100-p2
+OK: OSPFv3 de as100-p2
+as100-p3 IPv4: 4 de 4
+as100-p3 IPv6: 4 de 4
+OK: OSPF IPv4 de as100-p3
+OK: OSPFv3 de as100-p3
+as100-p4 IPv4: 5 de 5
+as100-p4 IPv6: 5 de 5
+OK: OSPF IPv4 de as100-p4
+OK: OSPFv3 de as100-p4
+as100-p5 IPv4: 4 de 4
+as100-p5 IPv6: 4 de 4
+OK: OSPF IPv4 de as100-p5
+OK: OSPFv3 de as100-p5
+as100-pe1 IPv4: 2 de 2
+as100-pe1 IPv6: 2 de 2
+OK: OSPF IPv4 de as100-pe1
+OK: OSPFv3 de as100-pe1
+as100-pe2 IPv4: 2 de 2
+as100-pe2 IPv6: 2 de 2
+OK: OSPF IPv4 de as100-pe2
+OK: OSPFv3 de as100-pe2
+as100-borde1 IPv4: 1 de 1
+as100-borde1 IPv6: 1 de 1
+OK: OSPF IPv4 de as100-borde1
+OK: OSPFv3 de as100-borde1
+as100-borde2 IPv4: 1 de 1
+as100-borde2 IPv6: 1 de 1
+OK: OSPF IPv4 de as100-borde2
+OK: OSPFv3 de as100-borde2
+
+=== 4. IS-IS DUAL-STACK EN AS200 ===
+as200-rr1: 2 de 2
+OK: IS-IS dual-stack de as200-rr1
+as200-rr2: 2 de 2
+OK: IS-IS dual-stack de as200-rr2
+as200-p1: 4 de 4
+OK: IS-IS dual-stack de as200-p1
+as200-p2: 5 de 5
+OK: IS-IS dual-stack de as200-p2
+as200-p3: 4 de 4
+OK: IS-IS dual-stack de as200-p3
+as200-p4: 5 de 5
+OK: IS-IS dual-stack de as200-p4
+as200-p5: 4 de 4
+OK: IS-IS dual-stack de as200-p5
+as200-pe1: 2 de 2
+OK: IS-IS dual-stack de as200-pe1
+as200-pe2: 2 de 2
+OK: IS-IS dual-stack de as200-pe2
+as200-borde1: 1 de 1
+OK: IS-IS dual-stack de as200-borde1
+as200-borde2: 1 de 1
+OK: IS-IS dual-stack de as200-borde2
+
+=== 5. iBGP CON ROUTE REFLECTORS ===
+AS100-RR1 IPv4: 10 de 10
+OK: AS100-RR1 IPv4
+AS100-RR1 IPv6: 10 de 10
+OK: AS100-RR1 IPv6
+AS100-RR2 IPv4: 10 de 10
+OK: AS100-RR2 IPv4
+AS100-RR2 IPv6: 10 de 10
+OK: AS100-RR2 IPv6
+AS200-RR1 IPv4: 10 de 10
+OK: AS200-RR1 IPv4
+AS200-RR1 IPv6: 10 de 10
+OK: AS200-RR1 IPv6
+AS200-RR2 IPv4: 10 de 10
+OK: AS200-RR2 IPv4
+AS200-RR2 IPv6: 10 de 10
+OK: AS200-RR2 IPv6
+
+=== 6. eBGP EXTERNO ===
+
+--- INTERCONEXIÓN AS100-AS200 ---
+as100-borde1 IPv4 hacia AS200: 2 de 2
+OK: as100-borde1 IPv4 hacia AS200
+as100-borde1 IPv6 hacia AS200: 2 de 2
+OK: as100-borde1 IPv6 hacia AS200
+as100-borde2 IPv4 hacia AS200: 2 de 2
+OK: as100-borde2 IPv4 hacia AS200
+as100-borde2 IPv6 hacia AS200: 2 de 2
+OK: as100-borde2 IPv6 hacia AS200
+as200-borde1 IPv4 hacia AS100: 2 de 2
+OK: as200-borde1 IPv4 hacia AS100
+as200-borde1 IPv6 hacia AS100: 2 de 2
+OK: as200-borde1 IPv6 hacia AS100
+as200-borde2 IPv4 hacia AS100: 2 de 2
+OK: as200-borde2 IPv4 hacia AS100
+as200-borde2 IPv6 hacia AS100: 2 de 2
+OK: as200-borde2 IPv6 hacia AS100
+
+--- ACCESO EMPRESARIAL ---
+CPE-ISP1 IPv6 hacia AS100: 1 de 1
+OK: CPE-ISP1 IPv6 hacia AS100
+CPE-ISP2 IPv6 hacia AS200: 1 de 1
+OK: CPE-ISP2 IPv6 hacia AS200
+
+--- SERVIDORES ANYCAST ---
+Servidor-web1 IPv4 hacia AS100: 1 de 1
+OK: Servidor-web1 IPv4 hacia AS100
+Servidor-web1 IPv6 hacia AS100: 1 de 1
+OK: Servidor-web1 IPv6 hacia AS100
+Servidor-web2 IPv4 hacia AS200: 1 de 1
+OK: Servidor-web2 IPv4 hacia AS200
+Servidor-web2 IPv6 hacia AS200: 1 de 1
+OK: Servidor-web2 IPv6 hacia AS200
+
+=== 7. VRRP ===
+MASTER IPv4: cpe-isp1
+MASTER IPv6: cpe-isp1
+OK: un único MASTER VRRP dual-stack
+
+=== 8. RUTAS Y NAT DE LOS CPE ===
+OK: cpe-isp1 tiene ruta predeterminada IPv4
+OK: cpe-isp1 tiene ruta predeterminada IPv6
+OK: cpe-isp1 tiene NAT IPv4
+OK: cpe-isp2 tiene ruta predeterminada IPv4
+OK: cpe-isp2 tiene ruta predeterminada IPv6
+OK: cpe-isp2 tiene NAT IPv4
+
+=== 9. SERVIDORES WEB ===
+OK: servidor-web1 está operativo
+OK: servidor-web2 está operativo
+
+=== 10. SERVICIO ANYCAST ===
+Servidor IPv4: servidor-web1
+Servidor IPv6: servidor-web1
+OK: HTTP Anycast IPv4
+OK: HTTP Anycast IPv6
+
+=== 11. FIREFOX ===
+OK: interfaz gráfica de Firefox
+
+=== RESULTADO ===
+OK: TODAS LAS PRUEBAS TLN03 FUERON SUPERADAS
+
+=== 7. FAILOVER WEB ANYCAST ===
+=== PRUEBA DE CONMUTACIÓN WEB ANYCAST ===
+
+=== 1. ESTADO INICIAL ===
+IPv4: servidor-web1
+IPv6: servidor-web1
+OK: servidor-web1 atiende IPv4 e IPv6
+
+=== 2. DETENIENDO SOLAMENTE NGINX EN WEB1 ===
+2026/10/02 19:12:08 [notice] 847#847: signal process started
+
+=== 3. ESPERANDO RETIRO DE ANYCAST ===
+Intento 1: HTTP=0 IPv4=0 IPv6=0
+OK: rutas Anycast retiradas en 2 segundos
+
+=== 4. ESPERANDO CONMUTACIÓN A WEB2 ===
+Intento 1: IPv4=servidor-web2 IPv6=servidor-web2
+OK: tráfico transferido a WEB2 en 0 segundos
+
+=== 5. RESTAURANDO NGINX EN WEB1 ===
+
+=== 6. ESPERANDO RECUPERACIÓN DE WEB1 ===
+Intento 1: IPv4=servidor-web1 IPv6=servidor-web1
+OK: tráfico recuperado por WEB1 en 1 segundos
+
+=== 7. INTERFACES FINALES DE WEB1 ===
+lo               UNKNOWN        127.0.0.1/8 203.0.113.10/32 2001:db8:500::10/128 ::1/128
+eth1@if2579      UP             198.18.100.2/30 2001:db8:ff:100::2/64 fe80::a8c1:abff:fe6c:1c60/64
+
+=== RESULTADO ===
+OK: FAILOVER WEB ANYCAST SUPERADO
+=== VALIDACIÓN AUTOMÁTICA TLN03 ===
+
+=== 1. TOPOLOGÍA ===
+14:12:13 INFO Parsing & checking topology file=pc01.yml
+14:12:13 INFO Topology is valid name=pc01 nodes=28 links=43
+OK: topología válida
+
+=== 2. CONTENEDORES ===
+Contenedores activos: 27 de 27
+OK: todos los contenedores están activos
+OK: no existen contenedores detenidos
+
+=== 3. OSPF DUAL-STACK EN AS100 ===
+as100-rr1 IPv4: 2 de 2
+as100-rr1 IPv6: 2 de 2
+OK: OSPF IPv4 de as100-rr1
+OK: OSPFv3 de as100-rr1
+as100-rr2 IPv4: 2 de 2
+as100-rr2 IPv6: 2 de 2
+OK: OSPF IPv4 de as100-rr2
+OK: OSPFv3 de as100-rr2
+as100-p1 IPv4: 4 de 4
+as100-p1 IPv6: 4 de 4
+OK: OSPF IPv4 de as100-p1
+OK: OSPFv3 de as100-p1
+as100-p2 IPv4: 5 de 5
+as100-p2 IPv6: 5 de 5
+OK: OSPF IPv4 de as100-p2
+OK: OSPFv3 de as100-p2
+as100-p3 IPv4: 4 de 4
+as100-p3 IPv6: 4 de 4
+OK: OSPF IPv4 de as100-p3
+OK: OSPFv3 de as100-p3
+as100-p4 IPv4: 5 de 5
+as100-p4 IPv6: 5 de 5
+OK: OSPF IPv4 de as100-p4
+OK: OSPFv3 de as100-p4
+as100-p5 IPv4: 4 de 4
+as100-p5 IPv6: 4 de 4
+OK: OSPF IPv4 de as100-p5
+OK: OSPFv3 de as100-p5
+as100-pe1 IPv4: 2 de 2
+as100-pe1 IPv6: 2 de 2
+OK: OSPF IPv4 de as100-pe1
+OK: OSPFv3 de as100-pe1
+as100-pe2 IPv4: 2 de 2
+as100-pe2 IPv6: 2 de 2
+OK: OSPF IPv4 de as100-pe2
+OK: OSPFv3 de as100-pe2
+as100-borde1 IPv4: 1 de 1
+as100-borde1 IPv6: 1 de 1
+OK: OSPF IPv4 de as100-borde1
+OK: OSPFv3 de as100-borde1
+as100-borde2 IPv4: 1 de 1
+as100-borde2 IPv6: 1 de 1
+OK: OSPF IPv4 de as100-borde2
+OK: OSPFv3 de as100-borde2
+
+=== 4. IS-IS DUAL-STACK EN AS200 ===
+as200-rr1: 2 de 2
+OK: IS-IS dual-stack de as200-rr1
+as200-rr2: 2 de 2
+OK: IS-IS dual-stack de as200-rr2
+as200-p1: 4 de 4
+OK: IS-IS dual-stack de as200-p1
+as200-p2: 5 de 5
+OK: IS-IS dual-stack de as200-p2
+as200-p3: 4 de 4
+OK: IS-IS dual-stack de as200-p3
+as200-p4: 5 de 5
+OK: IS-IS dual-stack de as200-p4
+as200-p5: 4 de 4
+OK: IS-IS dual-stack de as200-p5
+as200-pe1: 2 de 2
+OK: IS-IS dual-stack de as200-pe1
+as200-pe2: 2 de 2
+OK: IS-IS dual-stack de as200-pe2
+as200-borde1: 1 de 1
+OK: IS-IS dual-stack de as200-borde1
+as200-borde2: 1 de 1
+OK: IS-IS dual-stack de as200-borde2
+
+=== 5. iBGP CON ROUTE REFLECTORS ===
+AS100-RR1 IPv4: 10 de 10
+OK: AS100-RR1 IPv4
+AS100-RR1 IPv6: 10 de 10
+OK: AS100-RR1 IPv6
+AS100-RR2 IPv4: 10 de 10
+OK: AS100-RR2 IPv4
+AS100-RR2 IPv6: 10 de 10
+OK: AS100-RR2 IPv6
+AS200-RR1 IPv4: 10 de 10
+OK: AS200-RR1 IPv4
+AS200-RR1 IPv6: 10 de 10
+OK: AS200-RR1 IPv6
+AS200-RR2 IPv4: 10 de 10
+OK: AS200-RR2 IPv4
+AS200-RR2 IPv6: 10 de 10
+OK: AS200-RR2 IPv6
+
+=== 6. eBGP EXTERNO ===
+
+--- INTERCONEXIÓN AS100-AS200 ---
+as100-borde1 IPv4 hacia AS200: 2 de 2
+OK: as100-borde1 IPv4 hacia AS200
+as100-borde1 IPv6 hacia AS200: 2 de 2
+OK: as100-borde1 IPv6 hacia AS200
+as100-borde2 IPv4 hacia AS200: 2 de 2
+OK: as100-borde2 IPv4 hacia AS200
+as100-borde2 IPv6 hacia AS200: 2 de 2
+OK: as100-borde2 IPv6 hacia AS200
+as200-borde1 IPv4 hacia AS100: 2 de 2
+OK: as200-borde1 IPv4 hacia AS100
+as200-borde1 IPv6 hacia AS100: 2 de 2
+OK: as200-borde1 IPv6 hacia AS100
+as200-borde2 IPv4 hacia AS100: 2 de 2
+OK: as200-borde2 IPv4 hacia AS100
+as200-borde2 IPv6 hacia AS100: 2 de 2
+OK: as200-borde2 IPv6 hacia AS100
+
+--- ACCESO EMPRESARIAL ---
+CPE-ISP1 IPv6 hacia AS100: 1 de 1
+OK: CPE-ISP1 IPv6 hacia AS100
+CPE-ISP2 IPv6 hacia AS200: 1 de 1
+OK: CPE-ISP2 IPv6 hacia AS200
+
+--- SERVIDORES ANYCAST ---
+Servidor-web1 IPv4 hacia AS100: 1 de 1
+OK: Servidor-web1 IPv4 hacia AS100
+Servidor-web1 IPv6 hacia AS100: 1 de 1
+OK: Servidor-web1 IPv6 hacia AS100
+Servidor-web2 IPv4 hacia AS200: 1 de 1
+OK: Servidor-web2 IPv4 hacia AS200
+Servidor-web2 IPv6 hacia AS200: 1 de 1
+OK: Servidor-web2 IPv6 hacia AS200
+
+=== 7. VRRP ===
+MASTER IPv4: cpe-isp1
+MASTER IPv6: cpe-isp1
+OK: un único MASTER VRRP dual-stack
+
+=== 8. RUTAS Y NAT DE LOS CPE ===
+OK: cpe-isp1 tiene ruta predeterminada IPv4
+OK: cpe-isp1 tiene ruta predeterminada IPv6
+OK: cpe-isp1 tiene NAT IPv4
+OK: cpe-isp2 tiene ruta predeterminada IPv4
+OK: cpe-isp2 tiene ruta predeterminada IPv6
+OK: cpe-isp2 tiene NAT IPv4
+
+=== 9. SERVIDORES WEB ===
+OK: servidor-web1 está operativo
+OK: servidor-web2 está operativo
+
+=== 10. SERVICIO ANYCAST ===
+Servidor IPv4: servidor-web1
+Servidor IPv6: servidor-web1
+OK: HTTP Anycast IPv4
+OK: HTTP Anycast IPv6
+
+=== 11. FIREFOX ===
+OK: interfaz gráfica de Firefox
+
+=== RESULTADO ===
+OK: TODAS LAS PRUEBAS TLN03 FUERON SUPERADAS
+
+=== 8. COMPROBACIÓN FINAL ===
+14:12:40 INFO Parsing & checking topology file=pc01.yml
+14:12:40 INFO Topology is valid name=pc01 nodes=28 links=43
+Contenedores activos: 27 de 27
+
+==================================================
+ OK: REPRODUCIBILIDAD Y ALTA DISPONIBILIDAD SUPERADAS
+==================================================

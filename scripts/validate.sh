@@ -38,6 +38,28 @@ contar_bgp_establecidos() {
     '
 }
 
+comprobar_bgp_total() {
+    local descripcion="$1"
+    local contenedor="$2"
+    local comando="$3"
+    local esperado="$4"
+    local resultado
+
+    resultado=$(
+        contar_bgp_establecidos \
+          "$contenedor" \
+          "$comando"
+    )
+
+    echo "$descripcion: $resultado de $esperado"
+
+    if [ "$resultado" -eq "$esperado" ]; then
+        correcto "$descripcion"
+    else
+        incorrecto "$descripcion"
+    fi
+}
+
 contar_bgp_as_establecidos() {
     contenedor="$1"
     comando="$2"
@@ -127,102 +149,171 @@ fi
 echo
 echo "=== 3. OSPF DUAL-STACK EN AS100 ==="
 
-ospf4=$(
-    docker exec clab-pc01-as100-p2 \
-      vtysh -c "show ip ospf neighbor" 2>/dev/null |
-    awk '$3 ~ /^Full/ {cantidad++} END {print cantidad + 0}'
-)
+comprobar_ospf() {
+    local nodo="$1"
+    local esperado="$2"
+    local contenedor="clab-pc01-$nodo"
+    local ospf4
+    local ospf6
 
-ospf6=$(
-    docker exec clab-pc01-as100-p2 \
-      vtysh -c "show ipv6 ospf6 neighbor" 2>/dev/null |
-    awk '$4 ~ /^Full/ {cantidad++} END {print cantidad + 0}'
-)
+    ospf4=$(
+        docker exec "$contenedor" \
+          vtysh -c "show ip ospf neighbor" 2>/dev/null |
+        awk '
+          $3 ~ /^Full/ {
+              cantidad++
+          }
 
-echo "Vecinos OSPF IPv4 en AS100-P2: $ospf4 de 5"
-echo "Vecinos OSPFv3 en AS100-P2:    $ospf6 de 5"
+          END {
+              print cantidad + 0
+          }
+        '
+    )
 
-if [ "$ospf4" -eq 5 ]; then
-    correcto "OSPF IPv4 de AS100"
-else
-    incorrecto "OSPF IPv4 de AS100"
-fi
+    ospf6=$(
+        docker exec "$contenedor" \
+          vtysh -c "show ipv6 ospf6 neighbor" 2>/dev/null |
+        awk '
+          $4 ~ /^Full/ {
+              cantidad++
+          }
 
-if [ "$ospf6" -eq 5 ]; then
-    correcto "OSPFv3 de AS100"
-else
-    incorrecto "OSPFv3 de AS100"
-fi
+          END {
+              print cantidad + 0
+          }
+        '
+    )
+
+    echo "$nodo IPv4: $ospf4 de $esperado"
+    echo "$nodo IPv6: $ospf6 de $esperado"
+
+    if [ "$ospf4" -eq "$esperado" ]; then
+        correcto "OSPF IPv4 de $nodo"
+    else
+        incorrecto "OSPF IPv4 de $nodo"
+    fi
+
+    if [ "$ospf6" -eq "$esperado" ]; then
+        correcto "OSPFv3 de $nodo"
+    else
+        incorrecto "OSPFv3 de $nodo"
+    fi
+}
+
+while read -r nodo esperado; do
+    comprobar_ospf "$nodo" "$esperado"
+done <<'VECINOS_OSPF'
+as100-rr1 2
+as100-rr2 2
+as100-p1 4
+as100-p2 5
+as100-p3 4
+as100-p4 5
+as100-p5 4
+as100-pe1 2
+as100-pe2 2
+as100-borde1 1
+as100-borde2 1
+VECINOS_OSPF
 
 echo
 echo "=== 4. IS-IS DUAL-STACK EN AS200 ==="
 
-isis=$(
-    docker exec clab-pc01-as200-p2 \
-      vtysh -c "show isis neighbor" 2>/dev/null |
-    awk '$4 == "Up" {cantidad++} END {print cantidad + 0}'
-)
+comprobar_isis() {
+    local nodo="$1"
+    local esperado="$2"
+    local contenedor="clab-pc01-$nodo"
+    local vecinos
 
-echo "Vecinos IS-IS en AS200-P2: $isis de 5"
+    vecinos=$(
+        docker exec "$contenedor" \
+          vtysh -c "show isis neighbor" 2>/dev/null |
+        awk '
+          $4 == "Up" {
+              cantidad++
+          }
 
-if [ "$isis" -eq 5 ]; then
-    correcto "IS-IS de AS200"
-else
-    incorrecto "IS-IS de AS200"
-fi
+          END {
+              print cantidad + 0
+          }
+        '
+    )
+
+    echo "$nodo: $vecinos de $esperado"
+
+    if [ "$vecinos" -eq "$esperado" ]; then
+        correcto "IS-IS dual-stack de $nodo"
+    else
+        incorrecto "IS-IS dual-stack de $nodo"
+    fi
+}
+
+while read -r nodo esperado; do
+    comprobar_isis "$nodo" "$esperado"
+done <<'VECINOS_ISIS'
+as200-rr1 2
+as200-rr2 2
+as200-p1 4
+as200-p2 5
+as200-p3 4
+as200-p4 5
+as200-p5 4
+as200-pe1 2
+as200-pe2 2
+as200-borde1 1
+as200-borde2 1
+VECINOS_ISIS
 
 echo
 echo "=== 5. iBGP CON ROUTE REFLECTORS ==="
 
-as100_bgp4=$(
-    contar_bgp_establecidos \
-      clab-pc01-as100-rr1 \
-      "show bgp ipv4 unicast summary"
-)
+comprobar_bgp_total \
+  "AS100-RR1 IPv4" \
+  clab-pc01-as100-rr1 \
+  "show bgp ipv4 unicast summary" \
+  10
 
-as100_bgp6=$(
-    contar_bgp_establecidos \
-      clab-pc01-as100-rr1 \
-      "show bgp ipv6 unicast summary"
-)
+comprobar_bgp_total \
+  "AS100-RR1 IPv6" \
+  clab-pc01-as100-rr1 \
+  "show bgp ipv6 unicast summary" \
+  10
 
-as200_bgp4=$(
-    contar_bgp_establecidos \
-      clab-pc01-as200-rr1 \
-      "show bgp ipv4 unicast summary"
-)
+comprobar_bgp_total \
+  "AS100-RR2 IPv4" \
+  clab-pc01-as100-rr2 \
+  "show bgp ipv4 unicast summary" \
+  10
 
-as200_bgp6=$(
-    contar_bgp_establecidos \
-      clab-pc01-as200-rr1 \
-      "show bgp ipv6 unicast summary"
-)
+comprobar_bgp_total \
+  "AS100-RR2 IPv6" \
+  clab-pc01-as100-rr2 \
+  "show bgp ipv6 unicast summary" \
+  10
 
-echo "AS100-RR1 IPv4: $as100_bgp4 de 10"
-echo "AS100-RR1 IPv6: $as100_bgp6 de 10"
-echo "AS200-RR1 IPv4: $as200_bgp4 de 10"
-echo "AS200-RR1 IPv6: $as200_bgp6 de 10"
+comprobar_bgp_total \
+  "AS200-RR1 IPv4" \
+  clab-pc01-as200-rr1 \
+  "show bgp ipv4 unicast summary" \
+  10
 
-for resultado in \
-  "$as100_bgp4" \
-  "$as100_bgp6" \
-  "$as200_bgp4" \
-  "$as200_bgp6"; do
+comprobar_bgp_total \
+  "AS200-RR1 IPv6" \
+  clab-pc01-as200-rr1 \
+  "show bgp ipv6 unicast summary" \
+  10
 
-    if [ "$resultado" -ne 10 ]; then
-        incorrecto "una comprobación iBGP no tiene 10 sesiones"
-    fi
-done
+comprobar_bgp_total \
+  "AS200-RR2 IPv4" \
+  clab-pc01-as200-rr2 \
+  "show bgp ipv4 unicast summary" \
+  10
 
-if [ "$as100_bgp4" -eq 10 ] &&
-   [ "$as100_bgp6" -eq 10 ]; then
-    correcto "iBGP dual-stack de AS100"
-fi
-
-if [ "$as200_bgp4" -eq 10 ] &&
-   [ "$as200_bgp6" -eq 10 ]; then
-    correcto "iBGP dual-stack de AS200"
-fi
+comprobar_bgp_total \
+  "AS200-RR2 IPv6" \
+  clab-pc01-as200-rr2 \
+  "show bgp ipv6 unicast summary" \
+  10
 
 echo
 echo "=== 6. eBGP EXTERNO ==="

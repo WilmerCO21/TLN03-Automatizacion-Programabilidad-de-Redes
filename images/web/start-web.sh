@@ -9,7 +9,11 @@ nginx
     estado_anterior=""
 
     while :; do
-        if curl --noproxy '*'              --connect-timeout 1              --max-time 2              -fsS http://127.0.0.1/              >/dev/null 2>&1; then
+        if curl --noproxy '*' \
+             --connect-timeout 1 \
+             --max-time 2 \
+             -fsS http://127.0.0.1/ \
+             >/dev/null 2>&1; then
             estado_actual="activo"
 
             ip address replace \
