@@ -1,0 +1,81 @@
+{
+  "freeTextAnnotations": [
+    {
+      "id": "freeText_1789262158529",
+      "text": "10.0.0.0/30",
+      "position": {
+        "x": 355.33093613641876,
+        "y": 316.8640751305879
+      },
+      "fontSize": 14,
+      "fontColor": "#000000",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789262165496",
+      "text": "10.0.0.4/30",
+      "position": {
+        "x": 520.4875281675168,
+        "y": 316.6899579279034
+      },
+      "fontSize": 14,
+      "fontColor": "#000000",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789262174698",
+      "text": "10.0.0.8/30",
+      "position": {
+        "x": 441.25455146987395,
+        "y": 412.52583985395347
+      },
+      "fontSize": 14,
+      "fontColor": "#000000",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    }
+  ],
+  "freeShapeAnnotations": [],
+  "trafficRateAnnotations": [],
+  "groupStyleAnnotations": [],
+  "networkNodeAnnotations": [],
+  "nodeAnnotations": [
+    {
+      "id": "r1",
+      "position": {
+        "x": 380,
+        "y": 400
+      },
+      "interfacePattern": "e0/{n}"
+    },
+    {
+      "id": "r2",
+      "position": {
+        "x": 460,
+        "y": 260
+      }
+    },
+    {
+      "id": "r3",
+      "position": {
+        "x": 540,
+        "y": 400
+      },
+      "interfacePattern": "Gi{n}"
+    }
+  ],
+  "edgeAnnotations": [],
+  "aliasEndpointAnnotations": [],
+  "viewerSettings": {}
+}

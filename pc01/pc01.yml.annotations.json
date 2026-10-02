@@ -1,0 +1,1335 @@
+{
+  "freeTextAnnotations": [
+    {
+      "id": "freeText_1789443127716",
+      "text": "ISP1\nAS 100\nOSPF",
+      "position": {
+        "x": -505.52812152267705,
+        "y": -231.57858668071816
+      },
+      "fontSize": 27,
+      "fontColor": "#202020",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "center",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789443160412",
+      "text": "ISP2\nAS 200\nIS-IS",
+      "position": {
+        "x": 889.9237364206408,
+        "y": -237.5971757937446
+      },
+      "fontSize": 27,
+      "fontColor": "#202020",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "center",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529167765",
+      "text": "10.0.0.0/30",
+      "position": {
+        "x": -246.55602740799358,
+        "y": -66.11189388444039
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529193064",
+      "text": "10.0.0.4/30",
+      "position": {
+        "x": -283.17676772527506,
+        "y": 20.123689128228516
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529202385",
+      "text": "10.0.0.8/30",
+      "position": {
+        "x": -194.80455300252007,
+        "y": 18.757372027367573
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529209493",
+      "text": "10.0.0.12/30",
+      "position": {
+        "x": -321.1638251434175,
+        "y": 60.12368912822851
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529221791",
+      "text": "10.0.0.16/30",
+      "position": {
+        "x": -407.99541064772217,
+        "y": 163.45232582158616
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529230276",
+      "text": "10.0.0.20/30",
+      "position": {
+        "x": -318.55488006992414,
+        "y": 169.56421970602653
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529237895",
+      "text": "10.0.0.24/30",
+      "position": {
+        "x": -222.70445436186782,
+        "y": 188.4959038509835
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529246145",
+      "text": "10.0.0.28/30",
+      "position": {
+        "x": -239.02719343333143,
+        "y": 240.5453795022749
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529252620",
+      "text": "10.0.0.32/30",
+      "position": {
+        "x": -315.17562038720564,
+        "y": 294.73148686365244
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529286559",
+      "text": "10.0.0.40/30",
+      "position": {
+        "x": -62.58076523363928,
+        "y": 187.30389886771198
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529294479",
+      "text": "10.0.0.44/30",
+      "position": {
+        "x": -99.20150555092077,
+        "y": 35.305046205781444
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529301807",
+      "text": "10.0.0.48/30",
+      "position": {
+        "x": -87.74803239126514,
+        "y": -67.55127712416895
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529308908",
+      "text": "10.0.0.52/30",
+      "position": {
+        "x": -13.263923784069755,
+        "y": 31.504096149016515
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529317071",
+      "text": "10.0.0.56/30",
+      "position": {
+        "x": 39.853867722264695,
+        "y": 57.91399127927481
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529327883",
+      "text": "10.0.0.60/30",
+      "position": {
+        "x": -10.654978710576394,
+        "y": 237.0930536806888
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529340996",
+      "text": "10.0.0.36/30",
+      "position": {
+        "x": -171.2003582128513,
+        "y": 294.4841086071954
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529407126",
+      "text": "10.0.0.0/30",
+      "position": {
+        "x": 698.4818139310564,
+        "y": -64.27326342017221
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529415454",
+      "text": "10.0.0.48/30",
+      "position": {
+        "x": 550.6831585504306,
+        "y": -63.576014949814635
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529419981",
+      "text": "10.0.0.56/30",
+      "position": {
+        "x": 395.1813570775529,
+        "y": 55.47935832337083
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529429885",
+      "text": "10.0.0.52/30",
+      "position": {
+        "x": 479.87631087177147,
+        "y": 38.68430588849998
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529434944",
+      "text": "10.0.0.44/30",
+      "position": {
+        "x": 557.3910549265066,
+        "y": 27.528833974662234
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529460651",
+      "text": "10.0.0.60/30",
+      "position": {
+        "x": 425.8645156279834,
+        "y": 236.79505243487097
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529479744",
+      "text": "10.0.0.40/30",
+      "position": {
+        "x": 492.5217890146987,
+        "y": 189.14252933198017
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529483172",
+      "text": "10.0.0.24/30",
+      "position": {
+        "x": 658.2344356745995,
+        "y": 178.58305990977817
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529486520",
+      "text": "10.0.0.28/30",
+      "position": {
+        "x": 681.4393832397285,
+        "y": 240.247378256457
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529491358",
+      "text": "10.0.0.36/30",
+      "position": {
+        "x": 600.7703146092252,
+        "y": 296.3227390714637
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529508264",
+      "text": "10.0.0.32/30",
+      "position": {
+        "x": 792.2462309183875,
+        "y": 291.2285380527054
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529516829",
+      "text": "10.0.0.16/30",
+      "position": {
+        "x": 873.5619250298878,
+        "y": 166.35927214089742
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529522129",
+      "text": "10.0.0.20/30",
+      "position": {
+        "x": 772.8422334100233,
+        "y": 161.7880074749073
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529528738",
+      "text": "10.0.0.12/30",
+      "position": {
+        "x": 788.3946578722617,
+        "y": 59.82568788241062
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529535939",
+      "text": "10.0.0.8/30",
+      "position": {
+        "x": 650.8799138175265,
+        "y": 20.596002491635772
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529551483",
+      "text": "10.0.0.4/30",
+      "position": {
+        "x": 747.3263420172186,
+        "y": 18.75737202736758
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529596011",
+      "text": "181.0.0.0/30",
+      "position": {
+        "x": 212.5528739843734,
+        "y": -19.502743126557025
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529623382",
+      "text": "181.0.1.0/30",
+      "position": {
+        "x": 257.8814343710209,
+        "y": 152.46861919332753
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529629499",
+      "text": "161.0.1.0/30",
+      "position": {
+        "x": 158.4753639768258,
+        "y": 153.472198903342
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529640163",
+      "text": "161.0.0.0/30",
+      "position": {
+        "x": 213.75443022965615,
+        "y": 263.0267516989883
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529721435",
+      "text": "Lo0v4: 172.16.1.1\nLo0v6: fc10:16:1::1",
+      "position": {
+        "x": -25.23223459939267,
+        "y": -90.06707491604143
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529804126",
+      "text": "Lo0v4: 172.16.1.2\nLo0v6: fc10:16:1::2",
+      "position": {
+        "x": -357.11830568531593,
+        "y": -89.063495206027
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529826383",
+      "text": "Lo0v4: 200.1.1.1\nLo0v6: 2001:1:1::1",
+      "position": {
+        "x": 90.50375276882042,
+        "y": 303.5454731032072
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529839191",
+      "text": "Lo0v4: 200.1.1.2\nLo0v6: 2001:1:1::2",
+      "position": {
+        "x": 89.94784338580351,
+        "y": -49.14451366725468
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529925024",
+      "text": "Lo0v4: 172.16.3.1\nLo0v6: fc10:16:3::1",
+      "position": {
+        "x": -420.2417301166662,
+        "y": 29.635960281056093
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529934797",
+      "text": "Lo0v4: 172.16.3.2\nLo0v6: fc10:16:3::2",
+      "position": {
+        "x": -251.88873356630265,
+        "y": 382.8648328678864
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529952423",
+      "text": "Lo0v4: 172.16.4.1\nLo0v6: fc10:16:4::1",
+      "position": {
+        "x": -175.80406413872623,
+        "y": 74.15891749295741
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529973442",
+      "text": "Lo0v4: 172.16.4.2\nLo0v6: fc10:16:4::2",
+      "position": {
+        "x": -413.6126252171018,
+        "y": 305.8333150099395
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529981672",
+      "text": "Lo0v4: 172.16.4.3\nLo0v6: fc10:16:4::3",
+      "position": {
+        "x": -92.38367490447345,
+        "y": 306.83689471995393
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529988841",
+      "text": "Lo0v4: 172.16.4.4\nLo0v6: fc10:16:4::4",
+      "position": {
+        "x": 38.881072508299184,
+        "y": 114.25790576059157
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789529999210",
+      "text": "Lo0v4: 172.16.4.5\nLo0v6: fc10:16:4::5",
+      "position": {
+        "x": -171.7897452986685,
+        "y": -92.90762020715256
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789530099382",
+      "text": "Lo0v4: 172.16.1.2\nLo0v6: fc10:16:1::2",
+      "position": {
+        "x": 774.525588732396,
+        "y": -89.063495206027
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789530105358",
+      "text": "Lo0v4: 172.16.4.5\nLo0v6: fc10:16:4::5",
+      "position": {
+        "x": 603.544109088853,
+        "y": -90.0948576123776
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789530110805",
+      "text": "Lo0v4: 172.16.1.1\nLo0v6: fc10:16:1::1",
+      "position": {
+        "x": 464.3497122635991,
+        "y": -87.1553240536323
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789530116436",
+      "text": "Lo0v4: 190.1.1.1\nLo0v6: 2006:1:1::1",
+      "position": {
+        "x": 308.0403503785138,
+        "y": 305.45364425560194
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789530119620",
+      "text": "Lo0v4: 172.16.4.4\nLo0v6: fc10:16:4::4",
+      "position": {
+        "x": 387.2477660923355,
+        "y": 110.73852825870466
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789530123481",
+      "text": "Lo0v4: 190.1.1.2\nLo0v6: 2006:1:1::2",
+      "position": {
+        "x": 306.4938801740502,
+        "y": -48.14093395724022
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789530126812",
+      "text": "Lo0v4: 172.16.4.3\nLo0v6: fc10:16:4::3",
+      "position": {
+        "x": 507.45943966127663,
+        "y": 304.2221086604473
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789530132155",
+      "text": "Lo0v4: 172.16.3.2\nLo0v6: fc10:16:3::2",
+      "position": {
+        "x": 697.1266777582298,
+        "y": 386.58218690504157
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789530139863",
+      "text": "Lo0v4: 172.16.4.2\nLo0v6: fc10:16:4::2",
+      "position": {
+        "x": 879.1475342119314,
+        "y": 308.6460776047144
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789530148696",
+      "text": "Lo0v4: 172.16.4.1\nLo0v6: fc10:16:4::4",
+      "position": {
+        "x": 613.5120800888913,
+        "y": 75.16249720297182
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789530154232",
+      "text": "Lo0v4: 172.16.3.1\nLo0v6: fc10:16:3::1",
+      "position": {
+        "x": 869.8046549852263,
+        "y": 35.16249720297186
+      },
+      "fontSize": 11,
+      "fontColor": "#e64141",
+      "fontWeight": "bold",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    }
+  ],
+  "freeShapeAnnotations": [
+    {
+      "id": "freeShape_1789442921562",
+      "shapeType": "rectangle",
+      "position": {
+        "x": -516.482665821491,
+        "y": -207.83596518777208
+      },
+      "width": 655,
+      "height": 638,
+      "fillColor": "#f5e0e0",
+      "fillOpacity": 0.2,
+      "borderColor": "#202020",
+      "borderWidth": 1,
+      "borderStyle": "dashed",
+      "rotation": 0,
+      "cornerRadius": 15,
+      "zIndex": -1
+    },
+    {
+      "id": "freeShape_1789442990291",
+      "shapeType": "rectangle",
+      "position": {
+        "x": 362.26549110677854,
+        "y": -207.4978550196093
+      },
+      "width": 639,
+      "height": 641,
+      "fillColor": "#bbe2bf",
+      "fillOpacity": 0.2,
+      "borderColor": "#202020",
+      "borderWidth": 1,
+      "borderStyle": "dashed",
+      "rotation": 0,
+      "cornerRadius": 15,
+      "zIndex": -1
+    }
+  ],
+  "trafficRateAnnotations": [],
+  "groupStyleAnnotations": [],
+  "networkNodeAnnotations": [],
+  "nodeAnnotations": [
+    {
+      "id": "as100-rr1",
+      "position": {
+        "x": -380,
+        "y": 80
+      }
+    },
+    {
+      "id": "as100-r1",
+      "position": {
+        "x": -140,
+        "y": 480
+      }
+    },
+    {
+      "id": "as100-r2",
+      "position": {
+        "x": 20,
+        "y": 240
+      }
+    },
+    {
+      "id": "as100-r3",
+      "position": {
+        "x": -280,
+        "y": 480
+      }
+    },
+    {
+      "id": "as100-r4",
+      "position": {
+        "x": -140,
+        "y": 260
+      }
+    },
+    {
+      "id": "as100-r5",
+      "position": {
+        "x": -480,
+        "y": 500
+      }
+    },
+    {
+      "id": "as100-r6",
+      "position": {
+        "x": -260,
+        "y": 260
+      }
+    },
+    {
+      "id": "as100-r7",
+      "position": {
+        "x": -440,
+        "y": 380
+      }
+    },
+    {
+      "id": "as100-r8",
+      "position": {
+        "x": -380,
+        "y": 240
+      }
+    },
+    {
+      "id": "as100-r9",
+      "position": {
+        "x": -580,
+        "y": 360
+      }
+    },
+    {
+      "id": "as100-r10",
+      "position": {
+        "x": -480,
+        "y": 200
+      }
+    },
+    {
+      "id": "as200-borde",
+      "position": {
+        "x": 80,
+        "y": 420
+      }
+    },
+    {
+      "id": "as200-r1",
+      "position": {
+        "x": 100,
+        "y": 560
+      }
+    },
+    {
+      "id": "as200-r2",
+      "position": {
+        "x": 280,
+        "y": 420
+      }
+    },
+    {
+      "id": "as200-r3",
+      "position": {
+        "x": 260,
+        "y": 620
+      }
+    },
+    {
+      "id": "as200-r4",
+      "position": {
+        "x": 400,
+        "y": 460
+      }
+    },
+    {
+      "id": "as200-r5",
+      "position": {
+        "x": 200,
+        "y": 960
+      }
+    },
+    {
+      "id": "as200-r6",
+      "position": {
+        "x": 580,
+        "y": 580
+      }
+    },
+    {
+      "id": "as200-r7",
+      "position": {
+        "x": 600,
+        "y": 680
+      }
+    },
+    {
+      "id": "as200-r8",
+      "position": {
+        "x": 740,
+        "y": 620
+      }
+    },
+    {
+      "id": "as200-r9",
+      "position": {
+        "x": 620,
+        "y": 840
+      }
+    },
+    {
+      "id": "as200-r10",
+      "position": {
+        "x": 780,
+        "y": 800
+      }
+    },
+    {
+      "id": "as100-pe-bgp1",
+      "position": {
+        "x": 120,
+        "y": 360
+      }
+    },
+    {
+      "id": "as100-pe-bgp2",
+      "position": {
+        "x": 140,
+        "y": 60
+      }
+    },
+    {
+      "id": "as100-p1",
+      "position": {
+        "x": -220,
+        "y": 80
+      }
+    },
+    {
+      "id": "as100-p2",
+      "position": {
+        "x": -380,
+        "y": 260
+      }
+    },
+    {
+      "id": "as100-p3",
+      "position": {
+        "x": -80,
+        "y": 260
+      }
+    },
+    {
+      "id": "as100-pe1",
+      "position": {
+        "x": 0,
+        "y": -40
+      }
+    },
+    {
+      "id": "as100-pe2",
+      "position": {
+        "x": -320,
+        "y": -40
+      }
+    },
+    {
+      "id": "as100-pe3",
+      "position": {
+        "x": -360,
+        "y": 360
+      }
+    },
+    {
+      "id": "as100-pe4",
+      "position": {
+        "x": -100,
+        "y": 200
+      }
+    },
+    {
+      "id": "as100-pe5",
+      "position": {
+        "x": -340,
+        "y": 40
+      }
+    },
+    {
+      "id": "as100-pe6",
+      "position": {
+        "x": -220,
+        "y": 280
+      }
+    },
+    {
+      "id": "as200-pe-bgp1",
+      "position": {
+        "x": 420,
+        "y": 140
+      }
+    },
+    {
+      "id": "as200-pe-bgp2",
+      "position": {
+        "x": 780,
+        "y": 740
+      }
+    },
+    {
+      "id": "as200-p1",
+      "position": {
+        "x": 720,
+        "y": 80
+      }
+    },
+    {
+      "id": "as200-p2",
+      "position": {
+        "x": 900,
+        "y": 260
+      }
+    },
+    {
+      "id": "as200-p3",
+      "position": {
+        "x": 540,
+        "y": 260
+      }
+    },
+    {
+      "id": "as200-pe1",
+      "position": {
+        "x": 500,
+        "y": -40
+      }
+    },
+    {
+      "id": "as200-pe2",
+      "position": {
+        "x": 800,
+        "y": -40
+      }
+    },
+    {
+      "id": "as200-pe3",
+      "position": {
+        "x": 400,
+        "y": 400
+      }
+    },
+    {
+      "id": "as200-pe4",
+      "position": {
+        "x": 500,
+        "y": 380
+      }
+    },
+    {
+      "id": "as200-pe5",
+      "position": {
+        "x": 680,
+        "y": 600
+      }
+    },
+    {
+      "id": "as200-pe6",
+      "position": {
+        "x": 280,
+        "y": 440
+      }
+    },
+    {
+      "id": "as200-borde2",
+      "position": {
+        "x": 340,
+        "y": 0
+      }
+    },
+    {
+      "id": "as200-borde1",
+      "position": {
+        "x": 340,
+        "y": 260
+      }
+    },
+    {
+      "id": "as200-p5",
+      "position": {
+        "x": 640,
+        "y": -40
+      }
+    },
+    {
+      "id": "as200-p4",
+      "position": {
+        "x": 500,
+        "y": 120
+      }
+    },
+    {
+      "id": "as200-rr2",
+      "position": {
+        "x": 720,
+        "y": 340
+      }
+    },
+    {
+      "id": "as200-rr1",
+      "position": {
+        "x": 900,
+        "y": 80
+      }
+    },
+    {
+      "id": "as100-borde2",
+      "position": {
+        "x": 120,
+        "y": 0
+      }
+    },
+    {
+      "id": "as100-borde1",
+      "position": {
+        "x": 120,
+        "y": 260
+      }
+    },
+    {
+      "id": "as100-p5",
+      "position": {
+        "x": -140,
+        "y": -40
+      }
+    },
+    {
+      "id": "as100-p4",
+      "position": {
+        "x": 0,
+        "y": 120
+      }
+    },
+    {
+      "id": "as100-rr2",
+      "position": {
+        "x": -220,
+        "y": 340
+      }
+    }
+  ],
+  "edgeAnnotations": [],
+  "aliasEndpointAnnotations": [],
+  "viewerSettings": {}
+}

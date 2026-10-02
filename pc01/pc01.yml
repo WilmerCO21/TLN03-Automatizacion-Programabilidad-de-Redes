@@ -1,0 +1,155 @@
+name: pc01
+
+topology:
+  defaults:
+    kind: linux
+    image: frr:10.7.1-ssh
+    sysctls:
+        net.ipv6.conf.all.forwarding: 1
+        net.ipv6.conf.default.forwarding: 1
+
+  nodes:
+    # ==========================================
+    # AS 100 (ISP OSPF & iBGP)
+    # ==========================================
+    # Route Reflectors
+    as100-rr1:
+      binds:
+        - ./configs/as100-rr1/frr.conf:/etc/frr/frr.conf
+    as100-rr2:
+      binds:
+        - ./configs/as100-rr2/frr.conf:/etc/frr/frr.conf
+    # Core P Routers
+    as100-p1:
+      binds:
+        - ./configs/as100-p1/frr.conf:/etc/frr/frr.conf
+    as100-p2:
+      binds:
+        - ./configs/as100-p2/frr.conf:/etc/frr/frr.conf
+    as100-p3:
+      binds:
+        - ./configs/as100-p3/frr.conf:/etc/frr/frr.conf
+    as100-p4:
+      binds:
+        - ./configs/as100-p4/frr.conf:/etc/frr/frr.conf
+    as100-p5:
+      binds:
+        - ./configs/as100-p5/frr.conf:/etc/frr/frr.conf
+    # Provider Edge (PE)
+    as100-pe1:
+      binds:
+        - ./configs/as100-pe1/frr.conf:/etc/frr/frr.conf
+    as100-pe2:
+      binds:
+        - ./configs/as100-pe2/frr.conf:/etc/frr/frr.conf
+    # ASBR / Borde Internacional
+    as100-borde1:
+      binds:
+        - ./configs/as100-borde1/frr.conf:/etc/frr/frr.conf
+    as100-borde2:
+      binds:
+        - ./configs/as100-borde2/frr.conf:/etc/frr/frr.conf
+    # ==========================================
+    # AS 200 (ISP IS-IS & iBGP)
+    # ==========================================
+    # Route Reflectors
+    as200-rr1:
+      binds:
+        - ./configs/as200-rr1/frr.conf:/etc/frr/frr.conf
+    as200-rr2:
+      binds:
+        - ./configs/as200-rr2/frr.conf:/etc/frr/frr.conf
+    # Core P Routers
+    as200-p1:
+      binds:
+        - ./configs/as200-p1/frr.conf:/etc/frr/frr.conf
+    as200-p2:
+      binds:
+        - ./configs/as200-p2/frr.conf:/etc/frr/frr.conf
+    as200-p3:
+      binds:
+        - ./configs/as200-p3/frr.conf:/etc/frr/frr.conf
+    as200-p4:
+      binds:
+        - ./configs/as200-p4/frr.conf:/etc/frr/frr.conf
+    as200-p5:
+      binds:
+        - ./configs/as200-p5/frr.conf:/etc/frr/frr.conf
+    # Provider Edge (PE)
+    as200-pe1:
+      binds:
+        - ./configs/as200-pe1/frr.conf:/etc/frr/frr.conf
+    as200-pe2:
+      binds:
+        - ./configs/as200-pe2/frr.conf:/etc/frr/frr.conf
+    # ASBR / Borde Internacional
+    as200-borde1:
+      binds:
+        - ./configs/as200-borde1/frr.conf:/etc/frr/frr.conf
+    as200-borde2:
+      binds:
+        - ./configs/as200-borde2/frr.conf:/etc/frr/frr.conf
+
+  links:
+    # ------------------------------------------
+    # INTERCONEXIÓN DE BORDE REDUNDANTE (eBGP)
+    # ------------------------------------------
+    # Malla cruzada entre los 4 routers de borde internacionales
+    - endpoints: ["as100-borde1:eth1", "as200-borde1:eth1"]
+    - endpoints: ["as100-borde1:eth2", "as200-borde2:eth1"]
+    - endpoints: ["as100-borde2:eth1", "as200-borde1:eth2"]
+    - endpoints: ["as100-borde2:eth2", "as200-borde2:eth2"]
+
+    # ------------------------------------------
+    # ENLACES INTERNOS AS 100 (OSPF)
+    # ------------------------------------------
+    # Core de 5 Routers P interconectados en anillo con enlaces cruzados
+    - endpoints: ["as100-p1:eth1", "as100-p2:eth1"]
+    - endpoints: ["as100-p2:eth2", "as100-p3:eth1"]
+    - endpoints: ["as100-p3:eth2", "as100-p4:eth1"]
+    - endpoints: ["as100-p4:eth2", "as100-p5:eth1"]
+    - endpoints: ["as100-p5:eth2", "as100-p1:eth2"]
+    - endpoints: ["as100-p2:eth3", "as100-p4:eth3"] # Enlace cruzado de transporte
+
+    # Conexión redundante de los Route Reflectors al Core P
+    - endpoints: ["as100-rr1:eth1", "as100-p1:eth3"]
+    - endpoints: ["as100-rr1:eth2", "as100-p2:eth4"]
+    - endpoints: ["as100-rr2:eth1", "as100-p2:eth5"]
+    - endpoints: ["as100-rr2:eth2", "as100-p3:eth3"]
+
+    # Conexión redundante de los PE al Core P
+    - endpoints: ["as100-pe1:eth1", "as100-p4:eth4"]
+    - endpoints: ["as100-pe1:eth2", "as100-p5:eth3"]
+    - endpoints: ["as100-pe2:eth1", "as100-p5:eth4"]
+    - endpoints: ["as100-pe2:eth2", "as100-p1:eth4"]
+
+    # Conexión redundante de los Routers de BGP Borde al Core P
+    - endpoints: ["as100-borde1:eth3", "as100-p3:eth4"]
+    - endpoints: ["as100-borde2:eth3", "as100-p4:eth5"]
+
+    # ------------------------------------------
+    # ENLACES INTERNOS AS 200 (IS-IS)
+    # ------------------------------------------
+    # Core de 5 Routers P interconectados en anillo con enlaces cruzados
+    - endpoints: ["as200-p1:eth1", "as200-p2:eth1"]
+    - endpoints: ["as200-p2:eth2", "as200-p3:eth1"]
+    - endpoints: ["as200-p3:eth2", "as200-p4:eth1"]
+    - endpoints: ["as200-p4:eth2", "as200-p5:eth1"]
+    - endpoints: ["as200-p5:eth2", "as200-p1:eth2"]
+    - endpoints: ["as200-p2:eth3", "as200-p4:eth3"] # Enlace cruzado de transporte
+
+    # Conexión redundante de los Route Reflectors al Core P
+    - endpoints: ["as200-rr1:eth1", "as200-p1:eth3"]
+    - endpoints: ["as200-rr1:eth2", "as200-p2:eth4"]
+    - endpoints: ["as200-rr2:eth1", "as200-p2:eth5"]
+    - endpoints: ["as200-rr2:eth2", "as200-p3:eth3"]
+
+    # Conexión redundante de los PE al Core P
+    - endpoints: ["as200-pe1:eth1", "as200-p4:eth4"]
+    - endpoints: ["as200-pe1:eth2", "as200-p5:eth3"]
+    - endpoints: ["as200-pe2:eth1", "as200-p5:eth4"]
+    - endpoints: ["as200-pe2:eth2", "as200-p1:eth4"]
+
+    # Conexión redundante de los Routers de BGP Borde al Core P
+    - endpoints: ["as200-borde1:eth3", "as200-p3:eth4"]
+    - endpoints: ["as200-borde2:eth3", "as200-p4:eth5"]

@@ -1,0 +1,238 @@
+{
+  "freeTextAnnotations": [
+    {
+      "id": "freeText_1789361193460",
+      "text": "10.0.0.0/30",
+      "position": {
+        "x": 344.2763157894737,
+        "y": 318.55263157894734
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789361204694",
+      "text": "10.0.0.4/30",
+      "position": {
+        "x": 532.4710170697014,
+        "y": 319.27560455192037
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial",
+      "width": 101,
+      "height": 49
+    },
+    {
+      "id": "freeText_1789361231834",
+      "text": "10.0.0.8/30",
+      "position": {
+        "x": 435.7894736842105,
+        "y": 419.4634601706971
+      },
+      "fontSize": 14,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial",
+      "width": 101,
+      "height": 49
+    },
+    {
+      "id": "freeText_1789696814835",
+      "text": "IPv4: 192.168.1.0/24\nIPv6: 2001:168:1::/64",
+      "position": {
+        "x": -12.549828078996356,
+        "y": 214.19308806612557
+      },
+      "fontSize": 17,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789696827280",
+      "text": "IPv4: 192.168.2.0/24\nIPv6: 2001:168:2::/64",
+      "position": {
+        "x": 230.53906470919566,
+        "y": -58.30123803394851
+      },
+      "fontSize": 17,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1789696841140",
+      "text": "IPv4: 192.168.3.0/24\nIPv6: 2001:168:3::/64",
+      "position": {
+        "x": 808.5702166140552,
+        "y": 190.60572433442096
+      },
+      "fontSize": 17,
+      "fontColor": "#202020",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    }
+  ],
+  "freeShapeAnnotations": [
+    {
+      "id": "freeShape_1789696766056",
+      "shapeType": "rectangle",
+      "position": {
+        "x": -21.2480056149966,
+        "y": 205.46715954066417
+      },
+      "width": 345,
+      "height": 345,
+      "fillColor": "rgba(127, 127, 127, 0.16)",
+      "fillOpacity": 0.2,
+      "borderColor": "#202020",
+      "borderWidth": 1,
+      "borderStyle": "solid",
+      "rotation": 0,
+      "zIndex": -1
+    },
+    {
+      "id": "freeShape_1789696781053",
+      "shapeType": "rectangle",
+      "position": {
+        "x": 670.5668156986568,
+        "y": 193.05945666881183
+      },
+      "width": 318,
+      "height": 366,
+      "fillColor": "rgba(127, 127, 127, 0.16)",
+      "fillOpacity": 0.2,
+      "borderColor": "#202020",
+      "borderWidth": 1,
+      "borderStyle": "solid",
+      "rotation": 0,
+      "zIndex": -1
+    },
+    {
+      "id": "freeShape_1789696798576",
+      "shapeType": "rectangle",
+      "position": {
+        "x": 224.2469049151287,
+        "y": -52.210075685786066
+      },
+      "width": 535,
+      "height": 237,
+      "fillColor": "rgba(127, 127, 127, 0.16)",
+      "fillOpacity": 0.2,
+      "borderColor": "#202020",
+      "borderWidth": 1,
+      "borderStyle": "solid",
+      "rotation": 0,
+      "zIndex": -1
+    }
+  ],
+  "trafficRateAnnotations": [],
+  "groupStyleAnnotations": [],
+  "networkNodeAnnotations": [],
+  "nodeAnnotations": [
+    {
+      "id": "router1",
+      "position": {
+        "x": 380,
+        "y": 400
+      }
+    },
+    {
+      "id": "router2",
+      "position": {
+        "x": 460,
+        "y": 260
+      },
+      "interfacePattern": "e0/{n}"
+    },
+    {
+      "id": "router3",
+      "position": {
+        "x": 540,
+        "y": 400
+      }
+    },
+    {
+      "id": "switch1",
+      "interfacePattern": "e0/{n}",
+      "position": {
+        "x": 260,
+        "y": 400
+      },
+      "icon": "switch",
+      "iconCornerRadius": 0
+    },
+    {
+      "id": "switch3",
+      "interfacePattern": "e0/{n}",
+      "position": {
+        "x": 720,
+        "y": 400
+      },
+      "icon": "switch",
+      "iconCornerRadius": 0
+    },
+    {
+      "id": "switch2",
+      "interfacePattern": "e0/{n}",
+      "position": {
+        "x": 460,
+        "y": 120
+      },
+      "icon": "switch",
+      "iconCornerRadius": 0
+    },
+    {
+      "id": "PC3",
+      "position": {
+        "x": 880,
+        "y": 300
+      },
+      "icon": "client",
+      "iconCornerRadius": 0
+    },
+    {
+      "id": "PC2",
+      "position": {
+        "x": 460,
+        "y": 0
+      },
+      "icon": "client",
+      "iconCornerRadius": 0
+    },
+    {
+      "id": "PC1",
+      "position": {
+        "x": 120,
+        "y": 320
+      },
+      "icon": "client",
+      "iconCornerRadius": 0
+    }
+  ],
+  "edgeAnnotations": [],
+  "aliasEndpointAnnotations": [],
+  "viewerSettings": {}
+}

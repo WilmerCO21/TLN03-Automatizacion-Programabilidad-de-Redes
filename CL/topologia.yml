@@ -1,0 +1,18 @@
+name: lab-mixto-cisco-huawei
+
+topology:
+  nodes:
+    r1:
+      kind: cisco_iol
+      image: vrnetlab/cisco_iol:17.12.1
+    r2:
+      kind: huawei_vrp
+      image: vrnetlab/huawei_vrp:ne40e-V800R011C00SPC607B607
+    r3:
+      kind: cisco_csr1000v
+      image: vrnetlab/cisco_csr1000v:17.03.06
+
+  links:
+    - endpoints: ["r1:Ethernet0/1", "r2:eth1"]
+    - endpoints: ["r2:eth2", "r3:eth1"]
+    - endpoints: ["r3:eth2", "r1:Ethernet0/2"]
