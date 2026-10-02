@@ -10,9 +10,9 @@ RUN apt-get update \
         nftables \
     && rm -rf /var/lib/apt/lists/*
 
-COPY start-cpe.sh /usr/local/bin/start-cpe.sh
+COPY start-cpe.sh check-wan.sh /usr/local/bin/
 
-RUN chmod 0755 /usr/local/bin/start-cpe.sh \
+RUN chmod 0755 /usr/local/bin/start-cpe.sh /usr/local/bin/check-wan.sh \
     && mkdir -p /run/keepalived
 
 ENTRYPOINT ["/usr/local/bin/start-cpe.sh"]

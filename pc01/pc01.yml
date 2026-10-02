@@ -90,6 +90,64 @@ topology:
       binds:
         - ./configs/as200-borde2/frr.conf:/etc/frr/frr.conf
 
+    # ==========================================
+    # RED EMPRESARIAL, CPE Y SERVIDOR EXTERNO
+    # ==========================================
+    br-empresa:
+      kind: bridge
+
+    cpe-isp1:
+      kind: linux
+      image: tln03-cpe:1.0
+      sysctls:
+        net.ipv4.ip_forward: 1
+        net.ipv6.conf.all.forwarding: 1
+        net.ipv6.conf.default.forwarding: 1
+      binds:
+        - ./configs/cpe-isp1/frr.conf:/etc/frr/frr.conf
+        - ./configs/cpe-isp1/keepalived.conf:/etc/keepalived/keepalived.conf:ro
+        - ./configs/cpe-isp1/setup-nat.sh:/usr/local/bin/setup-nat.sh:ro
+      exec:
+        - /usr/local/bin/setup-nat.sh
+
+    cpe-isp2:
+      kind: linux
+      image: tln03-cpe:1.0
+      sysctls:
+        net.ipv4.ip_forward: 1
+        net.ipv6.conf.all.forwarding: 1
+        net.ipv6.conf.default.forwarding: 1
+      binds:
+        - ./configs/cpe-isp2/frr.conf:/etc/frr/frr.conf
+        - ./configs/cpe-isp2/keepalived.conf:/etc/keepalived/keepalived.conf:ro
+        - ./configs/cpe-isp2/setup-nat.sh:/usr/local/bin/setup-nat.sh:ro
+      exec:
+        - /usr/local/bin/setup-nat.sh
+
+    cliente-firefox:
+      kind: linux
+      image: lscr.io/linuxserver/firefox:1157.0build1-1xtradeb1.2404.1-ls125
+      shm-size: 1GB
+      ports:
+        - "3001:3001"
+      env:
+        PUID: "1000"
+        PGID: "1000"
+        TZ: America/Lima
+      binds:
+        - ./configs/cliente-firefox/setup-red.sh:/usr/local/bin/setup-red.sh:ro
+      exec:
+        - /usr/local/bin/setup-red.sh
+
+    servidor-web:
+      kind: linux
+      image: nginx:1.30.5-alpine
+      binds:
+        - ./configs/servidor-web/setup-red.sh:/usr/local/bin/setup-red.sh:ro
+        - ./configs/servidor-web/html/index.html:/usr/share/nginx/html/index.html:ro
+      exec:
+        - /usr/local/bin/setup-red.sh
+
   links:
     # ------------------------------------------
     # INTERCONEXIÓN DE BORDE REDUNDANTE (eBGP)
@@ -153,3 +211,15 @@ topology:
     # Conexión redundante de los Routers de BGP Borde al Core P
     - endpoints: ["as200-borde1:eth3", "as200-p3:eth4"]
     - endpoints: ["as200-borde2:eth3", "as200-p4:eth5"]
+
+    # ------------------------------------------
+    # ACCESO EMPRESARIAL Y SERVIDOR EXTERNO
+    # ------------------------------------------
+    - endpoints: ["as100-pe1:eth3", "cpe-isp1:eth1"]
+    - endpoints: ["as200-pe1:eth3", "cpe-isp2:eth1"]
+    - endpoints: ["as100-pe2:eth3", "servidor-web:eth1"]
+
+    # LAN empresarial compartida mediante VRRP
+    - endpoints: ["cpe-isp1:eth2", "br-empresa:cpe1"]
+    - endpoints: ["cpe-isp2:eth2", "br-empresa:cpe2"]
+    - endpoints: ["cliente-firefox:eth1", "br-empresa:cliente"]
