@@ -899,6 +899,21 @@
       "textDecoration": "none",
       "textAlign": "left",
       "fontFamily": "Arial"
+    },
+    {
+      "id": "freeText_1791074544611",
+      "text": "RED EMPRESARIAL\nLAN IPv4: 10.30.0.0/24\nLAN IPv6: 2001:db8:30::/64\nGateway VRRP: 10.30.0.1 / 2001:db8:30::1\nSalida redundante: ISP1 e ISP2",
+      "position": {
+        "x": 37.154495657950164,
+        "y": -545.7585951621473
+      },
+      "fontSize": 10,
+      "fontColor": "#e70404",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
     }
   ],
   "freeShapeAnnotations": [
@@ -937,6 +952,23 @@
       "rotation": 0,
       "cornerRadius": 15,
       "zIndex": -1
+    },
+    {
+      "id": "freeShape_1791074317819",
+      "shapeType": "rectangle",
+      "position": {
+        "x": 29.000207219587935,
+        "y": -552.9522074096685
+      },
+      "width": 504,
+      "height": 281,
+      "fillColor": "rgba(127, 127, 127, 0.16)",
+      "fillOpacity": 0.2,
+      "borderColor": "#bbbebf",
+      "borderWidth": 1,
+      "borderStyle": "solid",
+      "rotation": 0,
+      "zIndex": -1
     }
   ],
   "trafficRateAnnotations": [],
@@ -953,8 +985,8 @@
     {
       "id": "br-empresa",
       "position": {
-        "x": 220,
-        "y": -220
+        "x": 260,
+        "y": -380
       }
     },
     {
@@ -1114,22 +1146,22 @@
     {
       "id": "cliente-firefox",
       "position": {
-        "x": 220,
-        "y": -340
+        "x": 260,
+        "y": -520
       }
     },
     {
       "id": "cpe-isp2",
       "position": {
-        "x": 300,
-        "y": -100
+        "x": 400,
+        "y": -360
       }
     },
     {
       "id": "cpe-isp1",
       "position": {
-        "x": 160,
-        "y": -100
+        "x": 120,
+        "y": -360
       }
     },
     {
